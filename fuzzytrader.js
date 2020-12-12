@@ -16,7 +16,7 @@ function getOrdersForAmount(amount, callback) {
 
 function getPortfolio(callback) {
 	callback({
-		total_amount:"239,034.23",
+		total_amount:"239034.23",
 		assets: [
 			{symbol:"KODK", quantity:"9876", price:"135.66", amount:"567,855.0"},
 			{symbol:"BTCUSDT", quantity:"18.05", price:"183.05", amount:"23,423.20"},
