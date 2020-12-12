@@ -23,7 +23,7 @@ describe('Portfolio', () => {
 	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.assets.length).toBe(4)
-			expect(portfolio.total_amount).toBe(239,034.23)
+			expect(portfolio.total_amount).toBe(239034.23)
 			done()
 		})
 	})
