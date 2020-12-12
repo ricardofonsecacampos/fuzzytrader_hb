@@ -15,14 +15,41 @@ function getOrdersForAmount(amount, callback) {
 }
 
 function getPortfolio(callback) {
-	callback({
-		total_amount:239034.23,
-		assets: [
-			{symbol:"KODK", quantity:9876, price:135.66, amount:567855.0, type:"stock", profile:"agressive"},
-			{symbol:"BTCUSDT", quantity:18.05, price:183.05, amount:23423.20, type:"crypto", profile:"conservative"},
-			{symbol:"AAPL", quantity:45000, price:183.05, amount:500000.05, type:"stock", profile:"conservative"},
-			{symbol:"XRP", quantity:0.074657, price:567855.0, amount:855.0, type:"crypto", profile:"agressive"}
-		]
+	db.listAssets((assets) => {
+		// sets quantity.
+		db.listPortfolio((assetsPortfolio) => {
+			assets.forEach((asset) => {
+				// sets the 'quantity' property of each asset available.
+				if (assetsPortfolio[asset.symbol])
+					asset.quantity = assetsPortfolio[asset.symbol].quantity
+				else asset.quantity = 0
+			})
+		})
+		
+		// sets price.
+		
+		// sets amount.
+		let total = 0
+		assets.forEach((asset) => {
+			let amount = asset.quantity * asset.price
+			total += amount
+		})
+		
+		// mounts the portfolio JSON
+		json = {total_amount: total}
+		json.assets = assets
+		callback(json)
+		/*
+		callback({
+			total_amount:239034.23,
+			assets: [
+				{symbol:"KODK", quantity:9876, price:135.66, amount:567855.0, type:"stock", profile:"agressive"},
+				{symbol:"BTCUSDT", quantity:18.05, price:183.05, amount:23423.20, type:"crypto", profile:"conservative"},
+				{symbol:"AAPL", quantity:45000, price:183.05, amount:500000.05, type:"stock", profile:"conservative"},
+				{symbol:"XRP", quantity:0.074657, price:567855.0, amount:855.0, type:"crypto", profile:"agressive"}
+			]
+		})
+		*/
 	})
 }
 
