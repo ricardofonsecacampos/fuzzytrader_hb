@@ -25,3 +25,5 @@ function getPortfolio(callback) {
 		]
 	})
 }
+
+module.exports = { getOrdersForAmount, getPortfolio }
