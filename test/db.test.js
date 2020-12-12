@@ -1,6 +1,4 @@
-// unit tests of the fuzzytrader app.
-
-//jest.mock('../db');
+// unit tests of the fuzzytrader app - database operations.
 
 // this is the module to be tested
 const db = require('../db')
@@ -8,19 +6,14 @@ const db = require('../db')
 // avoid timeout with the web database (default 5s)
 jest.setTimeout(10000)
 
-
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
-	// mock function to use variables of test environment.
-	let getDBURL = jest.spyOn(db, 'getDBURL').mockImplementation(() => {
-		return process.env.DB_TEST_URL
-	})
-	//getDBKey.mockImplementation(() => process.env.DB_TEST_KEY)
-	
 	// avoid running tests on not test databases.
-	//expect(getDBURL()).toMatch('test')
+	//expect(db.dbUrl).toMatch('test')
 	
-	db.clearPortfolio((response) => { done() })
+	db.clearPortfolio((response) => {
+		done()
+	})
 })
 
 describe('Assets', () => {

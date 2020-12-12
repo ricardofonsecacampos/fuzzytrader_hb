@@ -23,3 +23,6 @@ I then began the TDD writing tests for database operations. It was really hard t
 So, I am now uploading this code to Github and making my first commit to master.
 
 The next fight with Jest will be testing the financial API, mocking Javascript functions.
+
+-- 3
+Ok, automating tests of the assets quotation API was easy. I didn't mock anything, as I tested only the API operation. Mocking will be used to test applicatio rules based on assets prices. That's what will come next.

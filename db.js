@@ -6,21 +6,16 @@
 // nodejs function for http requests
 const request = require("request");
 
-function getDBURL() {
-	return process.env.DB_URL
-}
-
-function getDBKey() {
-	return process.env.DB_KEY
-}
+const dbUrl = process.env.DB_URL
+const dbKey = process.env.DB_KEY
 
 function createRequest(collection, httpMethod = "GET") {
 	return {
 		method: httpMethod,
-		url: getDBURL() + collection,
+		url: dbUrl + collection,
 		headers: {
 			'cache-control': 'no-cache',
-			'x-apikey': getDBKey(),
+			'x-apikey': dbKey,
 			'content-type': 'application/json'
 		},
 		json: true
@@ -118,6 +113,5 @@ function alterPortfolio(item, callback) {
 
 module.exports = {
 	listAssets, searchAssets,
-	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio,
-	getDBURL, getDBKey
+	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio
 }
