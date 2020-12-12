@@ -1,5 +1,5 @@
-const assets = require('assets')
-const db = require('db')
+const assets = require('./assets')
+const db = require('./db')
 
 function getOrdersForAmount(amount, callback) {
 	if (amount <= 0) return []
