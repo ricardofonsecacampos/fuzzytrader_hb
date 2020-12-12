@@ -32,19 +32,20 @@ describe('Portfolio', () => {
 
 describe('Orders', () => {
 	test('empty', done => {
-		fuzzy.getOrdersForAmount(1000, (orders) => {
+		let amount = 1000
+		fuzzy.getOrdersForAmount(amount, (orders) => {
 			expect(orders.length).toBe(3)
 			
 			expect(orders[0].symbol).toBe('AAPL')
-			expect(orders[0].quantity).toBe(Math.trunc(1000 / 135.66))
+			expect(orders[0].quantity).toBe(Math.trunc(amount / 135.66))
 			expect(orders[0].price).toBe(135.66)
 			
 			expect(orders[1].symbol).toBe('BNB')
-			expect(orders[1].quantity).toBe(1000 / 183.05)
+			expect(orders[1].quantity).toBe((amount / 183.05).toFixed(5))
 			expect(orders[1].price).toBe(183.05)
 			
 			expect(orders[2].symbol).toBe('VALE')
-			expect(orders[2].quantity).toBe(Math.trunc(1000 / 55.0))
+			expect(orders[2].quantity).toBe(Math.trunc(amount / 55.0))
 			expect(orders[2].price).toBe(55.0)
 			done()
 		})
