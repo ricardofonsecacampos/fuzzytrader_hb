@@ -1,8 +1,9 @@
 // unit tests of the fuzzytrader app - business rules.
 
-// this is the module to be tested
+// this is the module to be tested, some functions will be mocked
 const fuzzy = require('../fuzzytrader')
 
+// initialization operations
 const db = require('../db')
 
 // avoid timeout with the web database (default 5s)
@@ -19,10 +20,10 @@ beforeAll(done => {
 })
 
 describe('Portfolio', () => {
-  test('empty', done => {
+	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
-      expect(portfolio.assets.length).toBe(0)
-      expect(portfolio.total_amount).toBe(0)
+			expect(portfolio.assets.length).toBe(4)
+			expect(portfolio.total_amount).toBe(239,034.23)
 			done()
 		})
 	})
