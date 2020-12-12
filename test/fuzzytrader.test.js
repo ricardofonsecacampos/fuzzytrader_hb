@@ -33,7 +33,7 @@ describe('Portfolio', () => {
 describe('Orders', () => {
 	test('empty', done => {
 		fuzzy.getOrdersForAmount(1000, (orders) => {
-			expect(orders.assets.length).toBe(3)
+			expect(orders.length).toBe(3)
 			
 			expect(orders[0].symbol).toBe('AAPL')
 			expect(orders[0].quantity).toBe(1000 / 135.66)
