@@ -101,12 +101,12 @@ describe('Portfolio', () => {
 
 describe('Mock', () => {
 	test('without mock', () => {
-		expect(f1()).toBe(1)
+		expect(fuzzy.f1()).toBe(1)
 	})
 	test('with mock', () => {
 		const f2spy = jest.spyOn(fuzzy, 'f2')
 		f2spy.mockImplementation(() => {console.log(2);return 2})
-		expect(f1()).toBe(2)
+		expect(fuzzy.f1()).toBe(2)
 		expect(f2spy).toHaveBeenCalled()
 	})
 })
