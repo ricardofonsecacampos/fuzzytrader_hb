@@ -34,6 +34,7 @@ function listAssets(callback) {
 	return searchAssets(null, callback)
 }
 
+//TODO change first parameter to JSON
 function searchAssets(profile, callback) {
 	let jsonRequest = createAssetsRequest()
 	if (profile) jsonRequest.url += '?q={"profile":"' + profile + '"}'
@@ -75,6 +76,8 @@ function searchPortfolio(symbol, callback) {
 	})                    
 }
 
+// Saves to the portfolio collection.
+// Expected item JSON: {symbol:aaa, quantity:333}
 function addToPortfolio(item, callback) {
 	let jsonRequest = createPortfolioRequest("POST")
 	jsonRequest.body = item
@@ -100,15 +103,21 @@ function alterPortfolio(item, callback) {
 */
 
 function alterPortfolio(item, callback) {
-	let jsonRequest = createPortfolioRequest("DELETE")
-	jsonRequest.url += '/' + item._id
+	if (item._id) {
+		let jsonRequest = createPortfolioRequest("DELETE")
+		jsonRequest.url += '/' + item._id
 	
-	request(jsonRequest, function (error, response, body) {
-		if (error) throw new Error(error)
-		
-		delete item._id
+		request(jsonRequest, function (error, response, body) {
+			if (error) throw new Error(error)
+			
+			delete item._id
+			
+			addToPortfolio(item, callback)
+		})
+	} else {
 		addToPortfolio(item, callback)
-	})                    
+	}
+		
 }
 
 module.exports = {
