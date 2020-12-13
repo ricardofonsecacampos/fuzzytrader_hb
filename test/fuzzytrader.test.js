@@ -35,6 +35,7 @@ describe('Portfolio', () => {
 				
 				let asset = portfolio.assets[0]
 				fuzzy.setPriceAndAmount(asset, (price, amount) => {
+					console.log('test: ')
 					expect(asset.amount).toBeGreaterThan(0)
 					expect(asset.price).toBeGreaterThan(0)
 					expect(portfolio.total_amount).toBeGreaterThan(0)
