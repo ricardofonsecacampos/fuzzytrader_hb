@@ -92,4 +92,4 @@ function getAssetInPortfolio(portfolio, symbol) {
 	return asset
 }
 	
-module.exports = { getOrdersForAmount, getPortfolio, setPriceAndAmount }
+module.exports = { getOrdersForAmount, getPortfolio, addToPortfolio, setPriceAndAmount }
