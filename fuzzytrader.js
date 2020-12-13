@@ -74,7 +74,7 @@ function addToPortfolio(item, callback) {
 	console.log(10)
 	dbModule.listPortfolio((portfolio) => {
 		console.log(11)
-		let existingItem = getAssetInPortfolio(portfolio, item.symbol)
+		let existingItem = getAssetInList(portfolio, item.symbol)
 		console.log(item)
 		console.log(existingItem)
 		if (existingItem) {
@@ -110,13 +110,19 @@ function getPrice(asset, callback) {
 		assetsModule.getCryptoPrice(asset.symbol, callback)
 }
 	
-// Utility function
+// Utility functions
+
 function getAssetInPortfolio(portfolio, symbol) {
+	return getAssetInList(portfolio.assets, symbol)
+}
+
+function getAssetInList(list, symbol) {
 	let asset = null
-	portfolio.assets.forEach((item) => {
+	list.forEach((item) => {
 		if (item.symbol == symbol) asset = item
 	})
 	return asset
 }
-	
+
+
 module.exports = { getOrdersForAmount, getPortfolio, addToPortfolio, setPriceAndAmount }
