@@ -51,6 +51,13 @@ function getPortfolio(callback) {
 }
 
 function addToPortfolio(item, callback) {
+	getPortfolio((portfolio) => {
+		let existingItem = getAssetInPortfolio(portfolio, item.symbol)
+		if (existingItem) dbModule.alterPortfolio(existingItem)
+		else dbModule.addToPortfolio(item, (createdItem) => {
+			callback(createdItem)
+		})
+	})
 }
 
 // Used when the quantity is known (portfolio) to get price and total amount of the asset.
@@ -74,6 +81,15 @@ function getPrice(asset, callback) {
 		assetsModule.getStockPrice(asset.symbol, callback)
 	else if (asset.type == 'stock')
 		assetsModule.getCryptoPrice(asset.symbol, callback)
+}
+	
+// Utility function
+function getAssetInPortfolio(portfolio, symbol) {
+	let asset = null
+	portfolio.assets.forEach((item) => {
+		if (item.symbol == symbol) asset = item
+	})
+	return asset
 }
 	
 module.exports = { getOrdersForAmount, getPortfolio, setPriceAndAmount }
