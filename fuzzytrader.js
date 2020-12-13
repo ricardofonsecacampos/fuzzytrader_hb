@@ -21,15 +21,6 @@ function getOrdersForAmount(amount, callback) {
 		
 		dbModule.searchAssets(typeSelected, callback(assets))
 	})
-	
-	callback([
-		{symbol:"AAPL", quantity:Math.trunc(amount/135.66), price:135.66,
-		 	description:"Apple Inc. - Technology", type:"stock", profile:"conservative"},
-		{symbol:"BNB", quantity:(amount/183.05).toFixed(5), price:183.05,
-		 	description:"Binance Exchange cryptocurrency", type:"crypto", profile:"conservative"},
-		{symbol:"VALE", quantity:Math.trunc(amount/55.0), price:55.0,
-		 	description:"Vale S.A. - Iron ore, nickel", type:"stock", profile:"conservative"}
-	])
 }
 
 // Lists available assets and sets the quantity owned by the trader (in his portfolio).
@@ -69,14 +60,10 @@ function getPortfolio(callback) {
 }
 
 function addToPortfolio(item, callback) {
-	console.log(10)
 	dbModule.listPortfolio((portfolio) => {
-		console.log(11)
 		let existingItem = getAssetInList(portfolio, item.symbol)
-		console.log(item)
-		console.log(existingItem)
+		
 		if (existingItem) {
-			console.log(12)
 			existingItem.quantity += item.quantity
 			dbModule.alterPortfolio(existingItem, callback)
 		} else {
