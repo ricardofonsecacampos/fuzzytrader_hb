@@ -61,11 +61,11 @@ describe('Portfolio', () => {
 						xrpItem = getAssetInPortfolio(portfolio2, 'XRP')
 						let aaplItem = getAssetInPortfolio(portfolio2, 'AAPL')
 					
-						expect(xrpItem.price).toBe(90.9565857)
+						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.amount).toBeGreaterThan(0)
 						expect(xrpItem.price).toBeGreaterThan(0)
 						
-						expect(aaplItem.price).toBe(300)
+						expect(aaplItem.quantity).toBe(300)
 						expect(aaplItem.amount).toBeGreaterThan(0)
 						expect(aaplItem.price).toBeGreaterThan(0)
 
@@ -96,7 +96,7 @@ describe('Portfolio', () => {
 						expect(xrpItem.amount).toBeGreaterThan(0)
 						expect(xrpItem.price).toBeGreaterThan(0)
 
-						expect(valeItem.price).toBe(80000)
+						expect(valeItem.quantity).toBe(80000)
 						expect(valeItem.amount).toBeGreaterThan(0)
 						expect(valeItem.price).toBeGreaterThan(0)
 
