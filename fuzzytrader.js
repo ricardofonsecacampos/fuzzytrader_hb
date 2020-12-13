@@ -85,11 +85,11 @@ function addToPortfolio(item, callback) {
 	})
 }
 
-// Used when the quantity is known (portfolio) to get price and total amount of the asset.
-// Also recalculates the portfolio amount.
+// Used when the quantity is known (portfolio) to get price and total amount of the asset and set them.
+// Sets asset price, amount and total amount of portfolio after its recalculation.
 // Calls the assets module and waits till it respond to call callback.
 function setPriceAndAmount(portfolio, asset, callback) {
-	let set = function (price) {
+	let setData = function (price) {
 		asset.price = Number(price)
 		asset.amount = Number(asset.quantity * price)
 		
@@ -98,13 +98,13 @@ function setPriceAndAmount(portfolio, asset, callback) {
 		portfolio.total_amount = total
 		callback(asset.price, asset.amount)
 	}
-	getPrice(asset, set)
+	getPrice(asset, setData)
 }
 
 function getPrice(asset, callback) {
 	if (asset.type == 'stock')
 		assetsModule.getStockPrice(asset.symbol, callback)
-	else if (asset.type == 'stock')
+	else if (asset.type == 'crypto')
 		assetsModule.getCryptoPrice(asset.symbol, callback)
 }
 	
