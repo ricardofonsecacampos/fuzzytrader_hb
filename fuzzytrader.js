@@ -25,7 +25,6 @@ function getPortfolio(callback) {
 				asset.amount = 0
 				
 				// tries to find the asset in the portfolio.
-				console.log(assetsPortfolio)
 				assetsPortfolio.forEach((item) => {
 					if (item.symbol == asset.symbol) asset.quantity = item.quantity
 				}) 
@@ -55,9 +54,8 @@ function getPortfolio(callback) {
 // Calls de assets module and waits till it respond to callback.
 function setPriceAndAmount(asset, callback) {
 	let set = function (price) {
-		asset.price = price
-		asset.amount = asset.quantity * price
-		console.log('set: price ' + asset.price + ', amount ' + asset.amount)
+		asset.price = Number(price)
+		asset.amount = Number(asset.quantity * price)
 		callback(asset.price, asset.amount)
 	}
 	getPrice(asset, set)
