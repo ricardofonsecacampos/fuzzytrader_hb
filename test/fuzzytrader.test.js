@@ -34,17 +34,15 @@ describe('Portfolio', () => {
 				portfolio.assets.forEach((item) => {
 					if (item.symbol == 'AAPL') aaplItem = item
 				})
-				console.log(aaplItem)
 				expect(portfolio.total_amount).toBe(0)
 				expect(aaplItem.symbol).toBe('AAPL')
 				expect(aaplItem.quantity).toBe(300)
 				expect(aaplItem.amount).toBe(0)
 				
-				fuzzy.setPriceAndAmount(aaplItem, (price, amount) => {
-					console.log(aaplItem)
+				fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
 					expect(aaplItem.amount).toBeGreaterThan(0)
 					expect(aaplItem.price).toBeGreaterThan(0)
-					expect(portfolio.total_amount).toBeGreaterThan(0)
+					expect(portfolio.total_amount).toBe(aaplItem.amount)
 					done()
 				})
 			})
