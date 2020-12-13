@@ -17,29 +17,18 @@ function getOrdersForAmount(amount, callback) {
 // Lists available assets, sets price, sets the quantity owned by the trader (in his portfolio),
 // calculateS each amount and then return it back through the callback function passed as a parameter.
 function getPortfolio(callback) {
-	dbModule.listAssets((assets) => {
-		// mounts the portfolio JSON
-		let jsonPortfolio = {total_amount: 0}
-		jsonPortfolio.assets = assets
-		
+	dbModule.listAssets((assets) => {		
 		// sets quantity.
 		dbModule.listPortfolio((assetsPortfolio) => {
 			assets.forEach((asset) => {
 				// sets the 'quantity' property of each asset available.
 				let assetPortfolio = assetsPortfolio[asset.symbol]
-				if (assetPortfolio) {
-					asset.quantity = assetPortfolio.quantity
-					// sets price and amount
-					getPrice(asset, (price) => {
-						asset.price = price
-						//asset.amount = asset.quantity * price
-						//jsonPortfolio.total_amount += asset.amount
-					})
-				} else {
-					asset.quantity = 0
-					//asset.amount = 0
-				}
+				asset.quantity = assetPortfolio ? assetPortfolio.quantity : asset.quantity = 0
 			})
+			
+			// creates the portfolio JSON
+			let jsonPortfolio = {total_amount: 0}
+			jsonPortfolio.assets = assets
 			callback(jsonPortfolio)
 		})
 
@@ -64,4 +53,4 @@ function getPrice(asset, callback) {
 	    assetsModule.getCryptoPrice(asset.symbol, callback)
 }
 	
-module.exports = { getOrdersForAmount, getPortfolio }
+module.exports = { getOrdersForAmount, getPortfolio, getPrice }
