@@ -21,10 +21,9 @@ beforeAll(done => {
 
 describe('Portfolio', () => {
 	test('empty', done => {
-		console.log(process.env.NODE_ENV)
 		fuzzy.getPortfolio((portfolio) => {
-			expect(portfolio.assets.length).toBe(4)
-			expect(portfolio.total_amount).toBe(239034.23)
+			expect(portfolio.assets.length).toBe(0)
+			expect(portfolio.total_amount).toBe(0)
 			done()
 		})
 	})
