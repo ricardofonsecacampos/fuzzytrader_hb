@@ -30,8 +30,9 @@ describe('Portfolio', () => {
 	})
 	test('one asset', done => {
 		db.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
-			expect(portfolio.total_amount).toBe(0)
 			fuzzy.getPortfolio((portfolio) => {
+				expect(portfolio.total_amount).toBe(0)
+				
 				let asset = portfolio.assets[0]
 				fuzzy.setPriceAndAmount(asset, (price, amount) => {
 					expect(asset.amount).toBeGreaterThan(0)
