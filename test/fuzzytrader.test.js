@@ -6,7 +6,7 @@ const fuzzy = require('../fuzzytrader')
 // to clear the portfolio before tests.
 const db = require('../db')
 
-// avoid timeout with the web database (default 5s)
+// avoid timeout with the web database (default 5000ms)
 jest.setTimeout(90000)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
@@ -47,26 +47,21 @@ describe('Portfolio', () => {
 		})
 	})
 	test('two assets', done => {
-		console.log(0)
-		fuzzy.addToPortfolio({symbol:'VALE', quantity:90.9565857}, (item) => {
-			console.log(1)
+		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
-				console.log(2)
-				let xrpItem = getAssetInPortfolio(portfolio, 'VALE')
+				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
 
 				fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
-					console.log(3)
 					fuzzy.getPortfolio((portfolio2) => {
-						console.log(4)
-						xrpItem = getAssetInPortfolio(portfolio2, 'VALE')
+						xrpItem = getAssetInPortfolio(portfolio2, 'XRP')
 						let aaplItem = getAssetInPortfolio(portfolio2, 'AAPL')
 					
+						expect(aaplItem.amount).toBeGreaterThan(0)
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.amount).toBeGreaterThan(0)
 						expect(xrpItem.price).toBeGreaterThan(0)
 						
 						expect(aaplItem.quantity).toBe(300)
-						expect(aaplItem.amount).toBeGreaterThan(0)
 						expect(aaplItem.price).toBeGreaterThan(0)
 
 						expect(portfolio2.total_amount).toBe(
