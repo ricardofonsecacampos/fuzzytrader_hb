@@ -59,7 +59,6 @@ function setPriceAndAmount(portfolio, asset, callback) {
 		asset.amount = Number(asset.quantity * price)
 		
 		let total = 0
-		console.log(portfolio)
 		portfolio.assets.forEach((item) => { total += item.amount })
 		portfolio.total_amount = total
 		callback(asset.price, asset.amount)
