@@ -72,7 +72,7 @@ describe('Portfolio', () => {
 			})
 		})
 	})
-	test.skip('alter one', done => {
+	test('alter one', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
