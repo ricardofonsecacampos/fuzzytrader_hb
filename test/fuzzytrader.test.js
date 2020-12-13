@@ -3,7 +3,7 @@
 // this is the module to be tested, some functions will be mocked
 const fuzzy = require('../fuzzytrader')
 
-// initialization operations
+// for simulations
 const db = require('../db')
 
 // avoid timeout with the web database (default 5s)
@@ -26,6 +26,20 @@ describe('Portfolio', () => {
 			expect(portfolio.total_amount).toBe(0)
 			expect(portfolio.assets.length).toBe(6)
 			done()
+		})
+	})
+	test('one asset', done => {
+		db.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
+			expect(portfolio.total_amount).toBe(0)
+			fuzzy.getPortfolio((portfolio) => {
+				let asset = portfolio.assets[0]
+				fuzzy.setPriceAndAmount(asset, (price, amount) => {
+					expect(asset.amount).toBeGreaterThan(0)
+					expect(asset.price).toBeGreaterThan(0)
+					expect(portfolio.total_amount).toBeGreaterThan(0)
+					done()
+				})
+			})
 		})
 	})
 })
