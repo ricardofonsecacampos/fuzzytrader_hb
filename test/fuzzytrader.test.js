@@ -30,13 +30,20 @@ describe('Portfolio', () => {
 	test('one asset', done => {
 		db.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
+				let aaplItem = null
+				portfolio.assets.forEach((item) => {
+					if (item.symbol == 'AAPL') aaplItem = item
+				}
+				console.log(aaplItem)
 				expect(portfolio.total_amount).toBe(0)
+				expect(aaplItem.symbol).toBe('AAPL')
+				expect(aaplItem.quantity).toBe(300)
+				expect(aaplItem.amount).toBe(0)
 				
-				let asset = portfolio.assets[0]
-				fuzzy.setPriceAndAmount(asset, (price, amount) => {
-					console.log('test: ')
-					expect(asset.amount).toBeGreaterThan(0)
-					expect(asset.price).toBeGreaterThan(0)
+				fuzzy.setPriceAndAmount(aaplItem, (price, amount) => {
+					console.log(aaplItem)
+					expect(aaplItem.amount).toBeGreaterThan(0)
+					expect(aaplItem.price).toBeGreaterThan(0)
 					expect(portfolio.total_amount).toBeGreaterThan(0)
 					done()
 				})
