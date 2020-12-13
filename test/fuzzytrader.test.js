@@ -75,21 +75,21 @@ describe('Portfolio', () => {
 	test.skip('alter one', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
-				let valeItem = getAssetInPortfolio(portfolio, 'AAPL')
-				expect(valeItem.quantity).toBe(80300)
+				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
+				expect(aaplItem.quantity).toBe(80300)
 				
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
 					
-				fuzzy.setPriceAndAmount(portfolio, valeItem (price, amount) => {
+				fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
 					fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
-						expect(valeItem.amount).toBeGreaterThan(0)
-						expect(valeItem.price).toBeGreaterThan(0)
+						expect(aaplItem.amount).toBeGreaterThan(0)
+						expect(aaplItem.price).toBeGreaterThan(0)
 
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.amount).toBeGreaterThan(0)
 						expect(xrpItem.price).toBeGreaterThan(0)
 						
-						expect(portfolio.total_amount).toBe(xrpItem.amount)
+						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
 
 						done()
 					})
