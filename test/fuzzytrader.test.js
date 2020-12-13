@@ -22,7 +22,6 @@ beforeAll(done => {
 describe('Portfolio', () => {
 	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
-			console.log(portfolio)
 			expect(portfolio.total_amount).toBe(0)
 			expect(portfolio.assets.length).toBe(6)
 			done()
