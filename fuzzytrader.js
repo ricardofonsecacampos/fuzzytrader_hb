@@ -19,9 +19,7 @@ function getOrdersForAmount(amount, callback) {
 		if (((totalAgressive + amount) / totalPortfolio) > 0.2)
 			typeSelected = 'conservative'
 		
-		dbModule.searchAssets(typeSelected, (assets) => {
-			
-		})
+		dbModule.searchAssets(typeSelected, callback(assets))
 	})
 	
 	callback([
