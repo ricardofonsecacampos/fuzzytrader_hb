@@ -109,5 +109,12 @@ function getAssetInList(list, symbol) {
 	return asset
 }
 
+function f1() {
+	return f2()
+}
+function f2() {
+	console.log(1)
+	return 1
+}
 
-module.exports = { getOrdersForAmount, getPortfolio, addToPortfolio, setPriceAndAmount }
+module.exports = { getOrdersForAmount, getPortfolio, addToPortfolio, setPriceAndAmount, f1, f2 }
