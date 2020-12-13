@@ -33,7 +33,7 @@ describe('Portfolio', () => {
 				let aaplItem = null
 				portfolio.assets.forEach((item) => {
 					if (item.symbol == 'AAPL') aaplItem = item
-				}
+				})
 				console.log(aaplItem)
 				expect(portfolio.total_amount).toBe(0)
 				expect(aaplItem.symbol).toBe('AAPL')
