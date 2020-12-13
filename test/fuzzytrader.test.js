@@ -99,7 +99,7 @@ describe('Portfolio', () => {
 	})
 })
 
-describe.skip('Mock', () => {
+describe('Mock', () => {
 	test('without mock', () => {
 		expect(f1()).toBe(1)
 	})
