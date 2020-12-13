@@ -20,14 +20,14 @@ beforeAll(done => {
 })
 
 describe('Portfolio', () => {
-	test('empty', done => {
+	test.skip('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.total_amount).toBe(0)
 			expect(portfolio.assets.length).toBe(6)
 			done()
 		})
 	})
-	test('one asset', done => {
+	test.skip('one asset', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
