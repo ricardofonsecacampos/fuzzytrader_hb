@@ -44,7 +44,7 @@ describe('Portfolio', () => {
 					expect(portfolio.total_amount).toBe(aaplItem.amount)
 					
 					done()
-				/*
+				*/
 				})
 			})
 		})
