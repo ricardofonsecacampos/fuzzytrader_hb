@@ -18,6 +18,10 @@ function getOrdersForAmount(amount, callback) {
 		let typeSelected = 'agressive'
 		if (((totalAgressive + amount) / totalPortfolio) > 0.2)
 			typeSelected = 'conservative'
+		
+		dbModule.searchAssets(typeSelected, (assets) => {
+			
+		})
 	})
 	
 	callback([
@@ -68,9 +72,11 @@ function getPortfolio(callback) {
 
 function addToPortfolio(item, callback) {
 	console.log(10)
-	getPortfolio((portfolio) => {
+	dbModule.listPortfolio((portfolio) => {
 		console.log(11)
 		let existingItem = getAssetInPortfolio(portfolio, item.symbol)
+		console.log(item)
+		console.log(existingItem)
 		if (existingItem) {
 			console.log(12)
 			existingItem.quantity += item.quantity
