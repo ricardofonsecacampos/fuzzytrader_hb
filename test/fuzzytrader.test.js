@@ -7,7 +7,7 @@ const fuzzy = require('../fuzzytrader')
 const db = require('../db')
 
 // avoid timeout with the web database (default 5s)
-jest.setTimeout(30000)
+jest.setTimeout(90000)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
@@ -47,6 +47,7 @@ describe('Portfolio', () => {
 		})
 	})
 	test('two assets', done => {
+		console.log(0)
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			console.log(1)
 			fuzzy.getPortfolio((portfolio) => {
