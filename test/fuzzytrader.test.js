@@ -31,8 +31,7 @@ describe('Portfolio', () => {
 		console.log(1)
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			console.log(2)
-			done()
-				/*
+
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 				expect(portfolio.total_amount).toBe(0)
@@ -48,7 +47,6 @@ describe('Portfolio', () => {
 					done()
 				})
 			})
-				*/
 		})
 	})
 })
