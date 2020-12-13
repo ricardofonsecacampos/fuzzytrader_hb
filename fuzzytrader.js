@@ -52,6 +52,7 @@ function setPriceAndAmount(asset, callback) {
 	let set = function (price) {
 		asset.price = price
 		asset.amount = asset.quantity * price
+		console.set('set: price ' + asset.price + ', amount ' + asset.amount)
 		callback(asset.price, asset.amount)
 	}
 	getPrice(asset, set)
