@@ -50,6 +50,9 @@ function getPortfolio(callback) {
 	})
 }
 
+function addToPortfolio(item, callback) {
+}
+
 // Used when the quantity is known (portfolio) to get price and total amount of the asset.
 // Also recalculates the portfolio amount.
 // Calls the assets module and waits till it respond to call callback.
