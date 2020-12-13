@@ -1,11 +1,23 @@
 const assetsModule = require('./assets')
 const dbModule = require('./db')
 
+// Determines if will be offered lower risk (conservative) or high stakes (agressive) assets to the trader.
+// The rationale is to allow up to 20% of total amount invested in high stakes assets.
+// For example, if the portfolio is 80k conservative + 10k agressive, we allow more 10k on agressive assets.
+// So, if the next trade amount is, lets say, 11k, we will only allow conservative assets.
 function getOrdersForAmount(amount, callback) {
 	if (amount <= 0) return []
 	
 	getPortfolio((portfolio) => {
-		
+		totalPortfolio = portfolio.total_amount
+		let totalConservative = 0
+		let totalAgressive = 0
+		portfolio.assets.forEach((asset) => {
+			if (asset.amount) {
+				if (asset.type == 'agressive') totalAgressive += asset.amount
+				else if (asset.type == 'conservative') totalConservative += asset.amount
+			}
+		}
 	})
 	
 	callback([
@@ -55,16 +67,17 @@ function getPortfolio(callback) {
 }
 
 function addToPortfolio(item, callback) {
-	console.log(3)
+	console.log(10)
 	getPortfolio((portfolio) => {
-		console.log(4)
+		console.log(11)
 		let existingItem = getAssetInPortfolio(portfolio, item.symbol)
 		if (existingItem) {
-			console.log(5)
+			console.log(12)
 			existingItem.quantity += item.quantity
 			dbModule.alterPortfolio(existingItem, callback)
+		} else {
+			dbModule.addToPortfolio(item, callback)
 		}
-		else dbModule.addToPortfolio(item, callback)
 	})
 }
 
