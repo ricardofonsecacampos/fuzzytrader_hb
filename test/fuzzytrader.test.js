@@ -28,10 +28,7 @@ describe('Portfolio', () => {
 		})
 	})
 	test('one asset', done => {
-		console.log(1)
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
-			console.log(2)
-
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 				expect(portfolio.total_amount).toBe(0)
@@ -50,10 +47,10 @@ describe('Portfolio', () => {
 		})
 	})
 	test('two assets', done => {
-		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item2) => {
+		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			console.log(1)
 			fuzzy.getPortfolio((portfolio) => {
-			console.log(2)
+				console.log(2)
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
 
 				fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
