@@ -11,7 +11,6 @@ function getStockPrice(symbol, callback) {
 		json: true,
 		url: apiUrl + '?function=GLOBAL_QUOTE&symbol=' + symbol + '&apikey=' + apiKey
 	}
-	
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
 		if (callback) callback(body['Global Quote']['05. price'])
@@ -23,7 +22,6 @@ function getCryptoPrice(symbol, callback) {
 		json: true,
 		url: apiUrl + '?function=CURRENCY_EXCHANGE_RATE&from_currency=' + symbol + '&to_currency=USD&apikey=' + apiKey
 	}
-	
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
 		if (callback) callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
