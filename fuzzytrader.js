@@ -25,7 +25,7 @@ function getPortfolio(callback) {
 				
 				// tries to find the asset in the portfolio.
 				console.log(assetsPortfolio)
-				assetsPortfolio.assets.forEach((item) => {
+				assetsPortfolio.forEach((item) => {
 					if (item.symbol == asset.symbol) asset.quantity = item.quantity
 				}) 
 			})
