@@ -41,23 +41,29 @@ describe('Portfolio', () => {
 					expect(aaplItem.amount).toBeGreaterThan(0)
 					expect(aaplItem.price).toBeGreaterThan(0)
 					expect(portfolio.total_amount).toBe(aaplItem.amount)
-					/*
+					
 					// second asset
 					db.addToPortfolio({symbol:'XRP', quantity:0.58}, (item2) => {
 						fuzzy.getPortfolio((portfolio2) => {
-							let xrpItem = null
-							portfolio2.assets.forEach((item) => {
-								if (item.symbol == 'XRP') xrpItem = item
-							})
-							aaplItem = null
-							portfolio2.assets.forEach((item) => {
-								if (item.symbol == 'AAPL') aaplItem = item
-							})
+							let xrpItem = getAssetInPortfolio(portfolio2, 'XRP')
+							aaplItem = getAssetInPortfolio(portfolio2, 'AAPL')
 						
-						done()
+							fuzzy.setPriceAndAmount(portfolio2, xrpItem, (price, amount) => {
+								expect(xrpItem.price).toBe(0.58)
+								expect(xrpItem.amount).toBeGreaterThan(0)
+								expect(xrpItem.price).toBeGreaterThan(0)
+								
+								expect(aaplItem.price).toBe(300)
+								expect(aaplItem.amount).toBeGreaterThan(0)
+								expect(aaplItem.price).toBeGreaterThan(0)
+								
+								expect(portfolio2.total_amount).toBe(
+									aaplItem.amount + xrpItem.amount)
+								
+								done()
+							})
+						})
 					})
-					*/
-					done()
 				})
 			})
 		})
