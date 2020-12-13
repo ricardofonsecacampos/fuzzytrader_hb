@@ -10,14 +10,14 @@ function getOrdersForAmount(amount, callback) {
 	
 	getPortfolio((portfolio) => {
 		totalPortfolio = portfolio.total_amount
-		let totalConservative = 0
 		let totalAgressive = 0
 		portfolio.assets.forEach((asset) => {
-			if (asset.amount) {
-				if (asset.type == 'agressive') totalAgressive += asset.amount
-				else if (asset.type == 'conservative') totalConservative += asset.amount
-			}
-		}
+			if (asset.amount && asset.type == 'agressive') totalAgressive += asset.amount
+		})
+		
+		let typeSelected = 'agressive'
+		if (((totalAgressive + amount) / totalPortfolio) > 0.2)
+			typeSelected = 'conservative'
 	})
 	
 	callback([
