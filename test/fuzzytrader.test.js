@@ -68,6 +68,42 @@ describe('Portfolio', () => {
 			})
 		})
 	})
+	test('two assets, alter one', done => {
+		db.addToPortfolio({symbol:'VALE', quantity:80000}, (item) => {
+			fuzzy.getPortfolio((portfolio) => {
+				let valeItem = getAssetInPortfolio(portfolio, 'VALE')
+				fuzzy.setPriceAndAmount(portfolio, valeItem, (price, amount) => {
+					db.addToPortfolio({symbol:'BTCUSDT', quantity:3.58943036401}, (item2) => {
+						fuzzy.getPortfolio((portfolio2) => {
+							let btcItem = getAssetInPortfolio(portfolio2, 'BTCUSDT')
+							fuzzy.setPriceAndAmount(portfolio2, btcItem, (price, amount) => {
+								valeItem = {symbol:'VALE', quantity:5000}
+								db.alterPortfolio(valeItem, (item3) => {
+									fuzzy.getPortfolio((portfolio3) => {
+										valeItem = getAssetInPortfolio(portfolio3, 'VALE')
+										btcItem = getAssetInPortfolio(portfolio3, 'BTCUSDT')
+										
+										expect(btcItem.price).toBe(3.58943036401)
+										expect(btcItem.amount).toBeGreaterThan(0)
+										expect(btcItem.price).toBeGreaterThan(0)
+								
+										expect(valeItem.price).toBe(5000)
+										expect(valeItem.amount).toBeGreaterThan(0)
+										expect(valeItem.price).toBeGreaterThan(0)
+								
+										expect(portfolio3.total_amount).toBe(
+											btcItem.amount + valeItem.amount)
+										
+										done()
+									})
+								})
+							})
+						})
+					})
+				})
+			})
+		})
+	})
 })
 
 describe('Orders', () => {
