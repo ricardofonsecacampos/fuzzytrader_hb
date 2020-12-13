@@ -49,6 +49,69 @@ describe('Portfolio', () => {
 			})
 		})
 	})
+	test('two assets', done => {
+		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item2) => {
+			console.log(1)
+			fuzzy.getPortfolio((portfolio) => {
+			console.log(2)
+				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
+
+				fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
+					console.log(3)
+					fuzzy.getPortfolio((portfolio2) => {
+						console.log(4)
+						xrpItem = getAssetInPortfolio(portfolio2, 'XRP')
+						let aaplItem = getAssetInPortfolio(portfolio2, 'AAPL')
+					
+						expect(xrpItem.price).toBe(90.9565857)
+						expect(xrpItem.amount).toBeGreaterThan(0)
+						expect(xrpItem.price).toBeGreaterThan(0)
+						
+						expect(aaplItem.price).toBe(300)
+						expect(aaplItem.amount).toBeGreaterThan(0)
+						expect(aaplItem.price).toBeGreaterThan(0)
+
+						expect(portfolio2.total_amount).toBe(
+							aaplItem.amount + xrpItem.amount)
+
+						done()
+					})
+				})
+			})
+		})
+	})
+	/*
+	test.skip('alter one', done => {
+		fuzzy.addToPortfolio({symbol:'VALE', quantity:80000}, (item) => {
+			console.log(10)
+			fuzzy.getPortfolio((portfolio) => {
+			console.log(11)
+				let valeItem = getAssetInPortfolio(portfolio, 'VALE')
+				fuzzy.setPriceAndAmount(portfolio, valeItem, (price, amount) => {
+			console.log(12)
+					fuzzy.getPortfolio((portfolio2) => {
+			console.log(13)
+						valeItem = getAssetInPortfolio(portfolio2, 'VALE')
+						let xrpItem = getAssetInPortfolio(portfolio2, 'XRP')
+
+						expect(xrpItem.quantity).toBe(90.9565857)
+						expect(xrpItem.amount).toBeGreaterThan(0)
+						expect(xrpItem.price).toBeGreaterThan(0)
+
+						expect(valeItem.price).toBe(80000)
+						expect(valeItem.amount).toBeGreaterThan(0)
+						expect(valeItem.price).toBeGreaterThan(0)
+
+						expect(portfolio2.total_amount).toBe(
+							btcItem.amount + valeItem.amount)
+
+						done()
+					})
+				})
+			})
+		})
+	})
+	*/
 })
 
 describe.skip('Orders', () => {
