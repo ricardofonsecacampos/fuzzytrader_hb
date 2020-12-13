@@ -27,7 +27,7 @@ describe('Portfolio', () => {
 			done()
 		})
 	})
-	test.skip('one asset', done => {
+	test('one asset', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
@@ -46,7 +46,7 @@ describe('Portfolio', () => {
 			})
 		})
 	})
-	test('two assets', done => {
+	test.skip('two assets', done => {
 		console.log(0)
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			console.log(1)
