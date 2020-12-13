@@ -46,11 +46,22 @@ function getPortfolio(callback) {
 	})
 }
 
+// Used when the quantity is known (portfolio) to get price and total amount of the asset.
+// Calls de assets module and waits till it respond to callback.
+function setPriceAndAmount(asset, callback) {
+	let set = function (price) {
+		asset.price = price
+		asset.amount = asset.quantity * price
+		callback(asset.price, asset.amount)
+	}
+	getPrice(asset, set)
+}
+
 function getPrice(asset, callback) {
 	if (asset.type == 'stock')
-	    assetsModule.getStockPrice(asset.symbol, callback)
-	else
-	    assetsModule.getCryptoPrice(asset.symbol, callback)
+		assetsModule.getStockPrice(asset.symbol, callback)
+	else if (asset.type == 'stock')
+		assetsModule.getCryptoPrice(asset.symbol, callback)
 }
 	
-module.exports = { getOrdersForAmount, getPortfolio, getPrice }
+module.exports = { getOrdersForAmount, getPortfolio, setPriceAndAmount }
