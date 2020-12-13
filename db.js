@@ -104,20 +104,19 @@ function alterPortfolio(item, callback) {
 
 function alterPortfolio(item, callback) {
 	if (item._id) {
+		console.log(20)
 		let jsonRequest = createPortfolioRequest("DELETE")
 		jsonRequest.url += '/' + item._id
-	
 		request(jsonRequest, function (error, response, body) {
 			if (error) throw new Error(error)
-			
+			console.log(21)
 			delete item._id
-			
 			addToPortfolio(item, callback)
 		})
 	} else {
+		console.log(22)
 		addToPortfolio(item, callback)
 	}
-		
 }
 
 module.exports = {
