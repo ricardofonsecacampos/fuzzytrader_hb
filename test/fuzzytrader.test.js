@@ -27,13 +27,11 @@ describe('Portfolio', () => {
 			done()
 		})
 	})
-	test('one asset', done => {
+	test('two assets', done => {
+		// first asset
 		db.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
-				let aaplItem = null
-				portfolio.assets.forEach((item) => {
-					if (item.symbol == 'AAPL') aaplItem = item
-				})
+				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 				expect(portfolio.total_amount).toBe(0)
 				expect(aaplItem.symbol).toBe('AAPL')
 				expect(aaplItem.quantity).toBe(300)
@@ -43,6 +41,22 @@ describe('Portfolio', () => {
 					expect(aaplItem.amount).toBeGreaterThan(0)
 					expect(aaplItem.price).toBeGreaterThan(0)
 					expect(portfolio.total_amount).toBe(aaplItem.amount)
+					/*
+					// second asset
+					db.addToPortfolio({symbol:'XRP', quantity:0.58}, (item2) => {
+						fuzzy.getPortfolio((portfolio2) => {
+							let xrpItem = null
+							portfolio2.assets.forEach((item) => {
+								if (item.symbol == 'XRP') xrpItem = item
+							})
+							aaplItem = null
+							portfolio2.assets.forEach((item) => {
+								if (item.symbol == 'AAPL') aaplItem = item
+							})
+						
+						done()
+					})
+					*/
 					done()
 				})
 			})
@@ -71,3 +85,12 @@ describe('Orders', () => {
 		})
 	})
 })
+
+// Utility function
+function getAssetInPortfolio(portfolio, symbol) {
+	let asset = null
+	portfolio.assets.forEach((item) => {
+		if (item.symbol == symbol) asset = item
+	})
+	return asset
+}
