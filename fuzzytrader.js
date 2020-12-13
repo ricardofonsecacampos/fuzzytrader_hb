@@ -4,6 +4,10 @@ const dbModule = require('./db')
 function getOrdersForAmount(amount, callback) {
 	if (amount <= 0) return []
 	
+	getPortfolio((portfolio) => {
+		
+	})
+	
 	callback([
 		{symbol:"AAPL", quantity:Math.trunc(amount/135.66), price:135.66,
 		 	description:"Apple Inc. - Technology", type:"stock", profile:"conservative"},
@@ -51,12 +55,16 @@ function getPortfolio(callback) {
 }
 
 function addToPortfolio(item, callback) {
+	console.log(3)
 	getPortfolio((portfolio) => {
+		console.log(4)
 		let existingItem = getAssetInPortfolio(portfolio, item.symbol)
-		if (existingItem) dbModule.alterPortfolio(existingItem)
-		else dbModule.addToPortfolio(item, (createdItem) => {
-			callback(createdItem)
-		})
+		if (existingItem) {
+			console.log(5)
+			existingItem.quantity += item.quantity
+			dbModule.alterPortfolio(existingItem, callback)
+		}
+		else dbModule.addToPortfolio(item, callback)
 	})
 }
 
