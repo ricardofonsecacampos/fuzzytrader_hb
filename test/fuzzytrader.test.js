@@ -106,8 +106,9 @@ describe('Mock', () => {
 	test('with mock', () => {
 		const f2spy = jest.spyOn(fuzzy, 'f2')
 		f2spy.mockImplementation(() => {console.log(2);return 2})
-		expect(fuzzy.f1()).toBe(2)
 		expect(f2spy).toHaveBeenCalled()
+		expect(fuzzy.f2()).toBe(2)
+		expect(fuzzy.f1()).toBe(2)
 	})
 })
 
