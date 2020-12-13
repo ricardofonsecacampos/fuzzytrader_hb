@@ -20,7 +20,7 @@ beforeAll(done => {
 })
 
 describe('Portfolio', () => {
-	test.skip('empty', done => {
+	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.total_amount).toBe(0)
 			expect(portfolio.assets.length).toBe(6)
@@ -46,7 +46,7 @@ describe('Portfolio', () => {
 			})
 		})
 	})
-	test.skip('two assets', done => {
+	test('two assets', done => {
 		console.log(0)
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			console.log(1)
