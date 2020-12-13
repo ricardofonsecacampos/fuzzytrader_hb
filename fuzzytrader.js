@@ -32,15 +32,15 @@ function getPortfolio(callback) {
 					// sets price and amount
 					getPrice(asset, (price) => {
 						asset.price = price
-						asset.amount = asset.quantity * price
-						jsonPortfolio.total_amount += asset.amount
+						//asset.amount = asset.quantity * price
+						//jsonPortfolio.total_amount += asset.amount
 					})
-					callback(json)
 				} else {
 					asset.quantity = 0
-					asset.amount = 0
+					//asset.amount = 0
 				}
 			})
+			callback(jsonPortfolio)
 		})
 
 		/*
