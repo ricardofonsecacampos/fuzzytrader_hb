@@ -3,11 +3,8 @@
 // this is the module to be tested, some functions will be mocked
 const fuzzy = require('../fuzzytrader')
 
-// for simulations
-const db = require('../db')
-
 // avoid timeout with the web database (default 5s)
-jest.setTimeout(60000)
+jest.setTimeout(90000)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
@@ -28,7 +25,7 @@ describe('Portfolio', () => {
 		})
 	})
 	test('one asset', done => {
-		db.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
+		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 				expect(portfolio.total_amount).toBe(0)
@@ -47,7 +44,7 @@ describe('Portfolio', () => {
 		})
 	})
 	test('two assets', done => {
-		db.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item2) => {
+		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item2) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
 
@@ -72,7 +69,7 @@ describe('Portfolio', () => {
 		})
 	})
 	test('alter one', done => {
-		db.addToPortfolio({symbol:'VALE', quantity:80000}, (item) => {
+		fuzzy.addToPortfolio({symbol:'VALE', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let valeItem = getAssetInPortfolio(portfolio, 'VALE')
 				fuzzy.setPriceAndAmount(portfolio, valeItem, (price, amount) => {
