@@ -50,7 +50,7 @@ describe('Portfolio', () => {
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
-				let aaplItem = getAssetInPortfolio(portfolio2, 'AAPL')
+				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 
 				fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
 					fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
