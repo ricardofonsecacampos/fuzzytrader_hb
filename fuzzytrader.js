@@ -14,16 +14,19 @@ function getOrdersForAmount(amount, callback) {
 	])
 }
 
-// Lists available assets, sets price, sets the quantity owned by the trader (in his portfolio),
-// calculateS each amount and then return it back through the callback function passed as a parameter.
+// Lists available assets and sets the quantity owned by the trader (in his portfolio).
+// The price and amount of each asset must be set after calling this function.
 function getPortfolio(callback) {
 	dbModule.listAssets((assets) => {		
 		// sets quantity.
 		dbModule.listPortfolio((assetsPortfolio) => {
 			assets.forEach((asset) => {
-				// sets the 'quantity' property of each asset available.
-				let assetPortfolio = assetsPortfolio[asset.symbol]
-				asset.quantity = assetPortfolio ? assetPortfolio.quantity : asset.quantity = 0
+				asset.quantity = 0
+				
+				// tries to find the asset in the portfolio.
+				assetsPortfolio.assets.forEach((item) => {
+					if (item.symbol == asset.symbol) asset.quantity = item.quantity
+				}) 
 			})
 			
 			// creates the portfolio JSON
