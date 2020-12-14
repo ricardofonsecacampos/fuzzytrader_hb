@@ -4,7 +4,7 @@ This was originally a project for an employee selection process at bxblue / Braz
 
 The webapp runs on Heroku.
 
--- 1
+# 1
 I first decided to code with Javascript and use a NodeJS web server. Maybe Rails would be nice but there had been many years since I ran the first tutorials.
 
 Then, I started checking how I would automate the test of the application. After some research, I got to Jest. As it says to have mock funcionality and there are many cases with Heroku, it looked like a good choice.
@@ -17,12 +17,21 @@ Studying for a while the Jest documentation, I was able to install Jest on my He
 
 After getting confident Jest would fit my needs, I was ready to start coding.
 
--- 2
+# 2
 I then began the TDD writing tests for database operations. It was really hard to make it work as the database operations are all asynchronous (restdb). I was beaten hard by Jest, but at last I could win this first battle and my tests became all green! o/
 
 So, I am now uploading this code to Github and making my first commit to master.
 
 The next fight with Jest will be testing the financial API, mocking Javascript functions.
 
--- 3
-Ok, automating tests of the assets quotation API was easy. I didn't mock anything, as I tested only the API operation. Mocking will be used to test applicatio rules based on assets prices. That's what will come next.
+# 3
+Ok, automating tests of the assets quotation API was easy. I didn't mock anything, as I tested only the API operation. Mocking will be used to test application rules based on assets prices. That's what will come next.
+
+# 4
+Finished automating tests for all the application. The main functions uses the DB and assets modulos, this last one has been mocked with fixed assets prices/quotations.
+
+It was really hard to automate the test of high level operations (exposed to the application) as they are essentially asynchronous. Again, I had to struggle with Jest. Fortunately, all my tests are green! I am covering all the expected operations of the application. Yes, I made the screen prototype.
+
+# 5
+Next step is to connect the application (HTML page) to my functions and provide some front end automated tests to guarantee it is working fine (maybe Selenium).
+
