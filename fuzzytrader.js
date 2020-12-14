@@ -6,7 +6,7 @@ const dbModule = require('./db')
 // For example, if the portfolio is 80k conservative + 10k agressive, we allow more 10k on agressive assets.
 // So, if the next trade amount is, lets say, 11k, we will only allow conservative assets.
 function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callback) {
-	if (amount <= 0) return []
+	if (tradeAmount <= 0) return []
 	
 	let typeSelected = 'agressive'
 	if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
