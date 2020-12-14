@@ -1,13 +1,17 @@
 // unit tests of the fuzzytrader app - business rules.
 
-// this is the module to be tested, some functions will be mocked
+// this is the module to be tested.
 const fuzzy = require('../fuzzytrader')
 
 // to clear the portfolio before tests.
 const db = require('../db')
 
-// avoid timeout with the web database (default 5000ms)
+// avoid timeout with the web database (default 5000ms) and financial API.
 jest.setTimeout(90000)
+
+// mocking the fuzzy.getPrice() function in order to predict exact prices and amounts.
+const getPriceMocked = jest.spyOn(fuzzy, 'getPrice')
+getPriceMocked.mockImplementation(() => getPriceMockedImplementation)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
@@ -99,6 +103,15 @@ describe.skip('Portfolio', () => {
 	})
 })
 
+function getPriceMockedImplementation(asset, callback) {
+	let price = -1
+	switch (asset.symbol) {
+		case 'AAPL': price = 122.41; break;
+		case 'XRP': price = 0.50621; break;
+	}
+	callback(price)
+}
+
 describe('Mock', () => {
 	test('without mock', () => {
 		expect(fuzzy.f1()).toBe(1)
@@ -109,6 +122,7 @@ describe('Mock', () => {
 		fuzzy.f2()
 		expect(f2spy).toHaveBeenCalled()
 		expect(fuzzy.f2()).toBe(2)
+		fuzzy.f2 = f2spy
 		expect(fuzzy.f1()).toBe(2)
 	})
 })
