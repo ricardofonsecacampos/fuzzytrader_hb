@@ -1,9 +1,9 @@
-try {
+//try {
 	const assetsModule = require('./assets')
 	const dbModule = require('./db')
 	const searchAssets = dbModule.searchAssets
-} catch {
-}
+//} catch {
+//}
 
 // Determines if will be offered lower risk (conservative) or high stakes (agressive) assets to the trader.
 // The rationale is to allow up to 20% of total amount invested in high stakes assets.
