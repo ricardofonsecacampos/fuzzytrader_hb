@@ -1,0 +1,154 @@
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+	<title>Fuzzy Trader Home Broker</title>
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<!-- Fuzzytrader back end functions -->
+	<script src="fuzzytrader.js"></script>
+	<script>
+		// Inside this HTML file is placed the Javascript code that needs to be aware of how the
+		// front-end is built.
+		// This code deals with HTML and calls business logic functions imported from another file.
+		
+		// The first thing to do is bring current portfolio data for the trader.
+		window.onload = updatePortfolio
+		
+		// Callback function to update the data of portfolio assets and total shown to the trader.
+		// Clears the portfolio table then adds the portfolio asset's data again.
+		const setPortfolio = function (portfolio) {
+			let outer = document.getElementById('portfolio')
+			let total = document.querySelector('#portfolio-total')
+			
+			// clears the portfolio view.
+			document.querySelectorAll('#portfolio-item').forEach((item) => {outer.removeChild(item)})
+			outer.removeChild(total)
+			
+			// appends portfolio's asset data.
+			portfolio.assets.forEach((asset) => {
+				let item = document.createElement('div')
+				item.setAttribute('class', 'portfolio')
+				item.setAttribute('id', 'portfolio-item')
+				outer.appendChild(item)
+
+				setDivText(item, asset.symbol)
+				setDivText(item, asset.quantity)
+				setDivText(item, asset.price)
+				setDivText(item, asset.amount)
+			})
+			
+			// sets portfolio total.
+			outer.appendChild(total)
+			document.querySelector('#portfolio-total').children[3].innerText = portfolio.total_amount
+		}
+		
+		function setDivText(outer, data) {
+			let div = document.createElement('div')
+			div.innerText = data
+			outer.appendChild(div)
+		}
+		
+		function updatePortfolio() {
+			getPortfolio(setPortfolio)
+		}
+		
+		// Handles the amount input event and calls back end to select orders for the value entered.
+		// Treats non positive numbers as invalid and disabling orders.
+		function updateOrders() {
+			let amount = document.getElementsByTagName('input')['amount'].value
+			let emptyOrder = {symbol:"",price:"",quantity:""}
+			
+			if (!amount || amount <= 0) return setOrders([emptyOrder,emptyOrder,emptyOrder])
+			
+			getOrdersForAmount(amount, setOrders)
+		}
+		
+		// Callback function used to update orders infos based on json received from back end.
+		// Setting the symbol to empty disables the order.
+		const setOrders = function (orders) {
+			for (var i = 1; i < 4; i++) {
+				let divs = document.getElementById('order-'+ i).getElementsByTagName('div')
+				divs[0].getElementsByTagName('button')[0].disabled = !orders[i-1].symbol
+				divs[1].innerText = orders[i-1].symbol
+				divs[2].innerText = orders[i-1].price
+				divs[3].innerText = orders[i-1].quantity
+			}
+		}
+		
+		
+	</script>
+</head>
+<body>
+	<h1>Fuzzy Trader Home Broker</h1>
+	<p><br></p>
+	<div align="center" id="portfolio">
+		<div style="color: blue;"><b>Portfolio</b></div>
+		<div class="portfolio">
+			<div title="Stock/cryptocurrency market symbol">Symbol</div>
+			<div title="Total quantity on your portfolio">Quantity</div>
+			<div title="Current stock/cryptocurrency market price in US dollars">Price</div>
+			<div title="Amount in US dollars on your portfolio">Amount</div>
+		</div>
+		<!--div class="portfolio" id="portfolio-item">
+			<div>BTCUSD</div>
+			<div>0.234</div>
+			<div>16080.23</div>
+			<div>3534</div>
+		</div-->
+		<div class="portfolio" id="portfolio-total">
+			<div>TOTAL</div>
+			<div></div>
+			<div></div>
+			<div>0.0</div>
+		</div>
+	</div>
+	<p><br></p>
+	<div align="center">
+		<div style="color: darkred;"><b>New Order</b></div>
+		<div class="order-amount">
+			<div align="right">Amount:</div>
+			<div title="Enter amount in US dollars to buy stock/cryptocurrency">
+				<input type="text" size="10" placeholder="US dollars" name="amount" onchange="updateOrders()">
+			</div>
+			<div title="Click to update list">
+				<button onclick="updateOrders()">UPDATE</button>
+			</div>
+		</div>
+		<div class="order">
+			<div title="Click to buy">-</div>
+			<div title="Stock/cryptocurrency market symbol">Symbol</div>
+			<div title="Current stock/cryptocurrency market price in US dollars">Price</div>
+			<div title="Quantity to be bought with the amount entered">Quantity</div>
+		</div>
+		<div class="order" id="order-1">
+			<div><button>BUY</button></div>
+			<div>GLDUS</div>
+			<div>1680.75</div>
+			<div>12.20</div>
+		</div>
+		<div class="order" id="order-2">
+			<div><button>BUY</button></div>
+			<div>AAPL</div>
+			<div>257.8</div>
+			<div>120</div>
+		</div>
+		<div class="order" id="order-3">
+			<div><button>BUY</button></div>
+			<div>BTCUSD</div>
+			<div>18900.75</div>
+			<div>0.5687697</div>
+		</div>
+	</div>
+	<p><br></p>
+	<div align="center">
+		<div style="color: blue;"><b>Messages</b></div>
+		<div class="message">
+			<div title="Time of the event">Time</div>
+			<div title="Message text">Message</div>
+		</div>
+		<div class="message" id="message">
+			<div><script>d = newDate(); document.write(d.getHours()+'h'+d.getMinutes()+'m'+d.getSeconds()+'s'</script></div>
+			<div></div>
+		</div>
+	</div>
+</body>
