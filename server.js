@@ -59,7 +59,7 @@ const server = http.createServer((req, res) => {
 					res.end(JSON.stringify(portfolio))
 				})
 				break;
-			case 'orders':
+			case '/orders':
 				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
 					console.log(req)
 					res.end(JSON.stringify(assets))
