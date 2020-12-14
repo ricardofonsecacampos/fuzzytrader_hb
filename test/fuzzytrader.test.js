@@ -3,8 +3,11 @@
 // this is the module to be tested.
 const fuzzy = require('../fuzzytrader')
 
-// to clear the portfolio before tests.
+// to clear the portfolio before tests and mock DB properties
 const db = require('../db')
+
+db.dbUrl = process.env.DB_TEST_URL
+db.dbKey = process.env.DB_TEST_KEY
 
 // avoid timeout (default 5000ms) with the web database and financial API.
 jest.setTimeout(90000)
