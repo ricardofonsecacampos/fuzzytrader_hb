@@ -1,18 +1,16 @@
-// unit tests of the fuzzytrader app - business rules.
+// Unit tests of the fuzzytrader app - business rules.
+// The database has 6 items in the available assets collection.
 
-// this is the module to be tested.
+// This is the module to be tested.
 const fuzzy = require('../fuzzytrader')
 
-// to clear the portfolio before tests and mock DB properties
+// To clear the portfolio before tests.
 const db = require('../db')
 
-db.dbUrl = process.env.DB_TEST_URL
-db.dbKey = process.env.DB_TEST_KEY
-
-// avoid timeout (default 5000ms) with the web database and financial API.
+// Avoid timeout (default 5000ms) with the web database and financial API, if not mocked.
 jest.setTimeout(90000)
 
-// mocks the assets module to be certain about assets quotation and assertive tests.
+// Mocks the assets module to be certain about assets quotation and make assertive tests.
 const assets = require('../assets')
 jest.mock('../assets');
 
@@ -52,6 +50,7 @@ describe('Portfolio', () => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
+				expect(portfolio.assets.length).toBe(1)
 				expect(portfolio.total_amount).toBe(0)
 				expect(aaplItem.symbol).toBe('AAPL')
 				expect(aaplItem.quantity).toBe(300)
@@ -70,6 +69,8 @@ describe('Portfolio', () => {
 	test('two assets', done => {
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
+				expect(portfolio.assets.length).toBe(2)
+				
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 
@@ -95,6 +96,8 @@ describe('Portfolio', () => {
 	test('alter one', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
+				expect(portfolio.assets.length).toBe(2)
+				
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
 				expect(aaplItem.quantity).toBe(80300)
 				
