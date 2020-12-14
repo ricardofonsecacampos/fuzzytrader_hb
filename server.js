@@ -1,8 +1,10 @@
-  
 // HTTP server to link the application HTML page to services in NodeJS functions.
 
 const http = require('http')
 const fs = require('fs')
+
+// Fuzzy trader services
+const fuzzy = require('./fuzzytrader.js')
 
 // use the port Heroku indicates
 const PORT = process.env.PORT || 3000
@@ -41,6 +43,9 @@ const server = http.createServer((req, res) => {
 	res.writeHead(200, { 'content-type': contentType })
 	// serve the requested file.
 	if (serveFile) fs.createReadStream(location).pipe(res)
+	else fuzzy.getPortfolio((portfolio) => {
+		console.log(portfolio)
+	})
 
 }).listen(PORT)
 
