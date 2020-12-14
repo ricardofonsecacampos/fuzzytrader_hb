@@ -64,14 +64,9 @@ function addToPortfolio(item, callback) {
 	})
 }
 
-// Used when the quantity is known (portfolio) to get price and total amount of the asset and set them.
+// Used when the quantity is known (portfolio) to get the price and calculate the amount of the asset.
 // Sets asset price, amount and total amount of portfolio after its recalculation.
-// Calls the assets module and waits till it respond to call callback.
-// The last parameter is to allow automated test to fix prices. I used Jest mocked functions, but
-// the function I mocked behaves the way I implemented only if called directly, not through other functions.
-// I mean that I thought it would be enough mocking getPrice() and expecting it to work differently when called by
-// 'setPriceAndAmount()'. But, that didn't happened. My calls to setPriceAndAmount() were ignoring the mocked getPrice().
-function setPriceAndAmount(portfolio, asset, callback, mockedGetPrice) {
+function setPriceAndAmount(portfolio, asset, callback) {
 	let setData = function (price) {
 		asset.price = Number(price)
 		asset.amount = Number(asset.quantity * price)
@@ -81,10 +76,22 @@ function setPriceAndAmount(portfolio, asset, callback, mockedGetPrice) {
 		portfolio.total_amount = total
 		callback(asset.price, asset.amount)
 	}
-	if (mockedGetPrice) mockedGetPrice(asset, setData)
-	else getPrice(asset, setData)
+	getPrice(asset, setData)
 }
 
+// Used when the amount is known (order) to get the price and calculate the quantity.
+// Sets asset price and quantity.
+function setPriceAndQuantity(amount, asset, callback) {
+	let setData = function (price) {
+		asset.price = Number(price)
+		asset.quantity = Number(amount / price)
+		
+		callback(asset.price, asset.quantity)
+	}
+	getPrice(asset, setData)
+}
+
+// Uses the assets module to retrieve the price of a stock or cryptocurrency.
 function getPrice(asset, callback) {
 	if (asset.type == 'stock')
 		assetsModule.getStockPrice(asset.symbol, callback)
