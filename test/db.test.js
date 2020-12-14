@@ -65,32 +65,43 @@ describe('Portfolio', () => {
 	test('adds another asset', done => {
 		db.addToPortfolio({symbol:"XRP", quantity:20.349834}, function (item) {
 			db.listPortfolio((list) => {
+				let xrpItem = getAssetInList(list, 'XRP')
+				let aaplItem = getAssetInList(list, 'AAPL')
+				
 				expect(list.length).toBe(2)
-				expect(list[0].symbol).toBe('AAPL')
-				expect(list[0].quantity).toBe(200)
-				expect(list[1].symbol).toBe('XRP')
-				expect(list[1].quantity).toBe(20.349834)
+				expect(aaplItem.quantity).toBe(200)
+				expect(xrpItem.quantity).toBe(20.349834)
 				done()
 			})
 		})
 	})
 	test('sets an asset quantity', done => {
-		db.searchPortfolio('AAPL', function (list1) {
-			db.alterPortfolio({"_id": list1[0]._id, "symbol": list1[0].symbol, "quantity": 500}, function () {
-				db.searchPortfolio('AAPL', function (list2) {
-					expect(list2[0].symbol).toBe('AAPL')
-					expect(list2[0].quantity).toBe(500)
-					db.searchPortfolio('XRP', function (list3) {
-						expect(list3[0].symbol).toBe('XRP')
-						expect(list3[0].quantity).toBe(20.349834)
-						db.listPortfolio((list4) => {
-							expect(list4.length).toBe(2)
-							done()
-						})
-					})
+		db.listPortfolio(function (list) {
+			let aaplItem = getAssetInList(list, 'AAPL')
+			aaplItem.quantity = 500
+			
+			db.alterPortfolio(aaplItem, function () {
+				db.listPortfolio(function (list2) {
+					aaplItem = getAssetInList(list2, 'AAPL')
+					let xrpItem = getAssetInList(list2, 'XRP')
+					
+					expect(aaplItem.symbol).toBe('AAPL')
+					expect(aaplItem.quantity).toBe(500)
+					expect(xrpItem.symbol).toBe('XRP')
+					expect(xrpItem.quantity).toBe(20.349834)
+					
+					expect(list2.length).toBe(2)
+					done()
 				})
 			})
 		})
 	})
 })
 
+function getAssetInList(list, symbol) {
+	let asset = null
+	list.forEach((item) => {
+		if (item.symbol == symbol) asset = item
+	})
+	return asset
+}
