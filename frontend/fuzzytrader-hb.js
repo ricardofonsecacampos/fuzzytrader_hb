@@ -9,6 +9,21 @@ function getOrdersForAmount(amount, callback) {
 }
 
 function getPortfolio(callback) {
+	fetch(baseUrl + 'get-portfolio')
+		.then(function (response) {
+			console.log('from JS: ' + response)
+			response.json()
+			.then(function (pokemon) {
+				callback(response)
+			})
+			.catch(() => {
+				//TODO add error message.
+			})
+		})
+		.catch(() => {
+			//TODO add error message.
+		})
+	/*
 	callback({
 		total_amount:"239,034.23",
 		assets: [
@@ -18,4 +33,7 @@ function getPortfolio(callback) {
 			{symbol:"XRP", quantity:"0.074657", price:"567855.0", amount:"855.0"}
 		]
 	})
+	*/
+}
+
 }
