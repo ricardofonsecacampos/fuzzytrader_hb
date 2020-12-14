@@ -12,7 +12,7 @@ function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callb
 	if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
 		typeSelected = 'conservative'
 
-	dbModule.searchAssets(typeSelected, callback(assets))
+	dbModule.searchAssets(typeSelected, callback)
 }
 
 // Lists available assets and sets the quantity owned by the trader (in his portfolio).
