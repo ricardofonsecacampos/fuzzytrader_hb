@@ -78,7 +78,7 @@ describe('Portfolio', () => {
 
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.price).toBe(0.50621)
-						expect(xrpItem.amount.toFixed(8)).toBe(46.04313325)
+						expect(xrpItem.amount).toBe(46.04313325)
 
 						expect(aaplItem.quantity).toBe(300)
 						expect(aaplItem.amount).toBe(36123)
@@ -150,7 +150,7 @@ describe('Orders', () => {
 		let agressiveAmount = 1000
 		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
 			expect(assets.length).toBe(3)
-			expect(assets[0].typrofilepe).toBe('conservative')
+			expect(assets[0].profile).toBe('conservative')
 			expect(assets[1].profile).toBe('conservative')
 			expect(assets[2].profile).toBe('conservative')
 			done()
