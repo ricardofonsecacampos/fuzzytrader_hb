@@ -75,7 +75,7 @@ describe('Portfolio', () => {
 
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.price).toBe(0.50621)
-						expect(xrpItem.amount).toBe(46,043133247197)
+						expect(xrpItem.amount).toBe(46.043133247197)
 
 						expect(aaplItem.quantity).toBe(300)
 						expect(aaplItem.amount).toBe(36123)
@@ -104,7 +104,7 @@ describe('Portfolio', () => {
 
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.price).toBe(0.50621)
-						expect(xrpItem.amount).toBe(46,043133247197)
+						expect(xrpItem.amount).toBe(46.043133247197)
 						
 						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
 
