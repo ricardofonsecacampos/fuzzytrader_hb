@@ -10,8 +10,8 @@ const db = require('../db')
 jest.setTimeout(90000)
 
 // mocking the fuzzy.getPrice() function in order to predict exact prices and amounts.
-const getPriceMocked = jest.spyOn(fuzzy, 'getPrice')
-getPriceMocked.mockImplementation(() => getPriceMockedImplementation)
+//const getPriceMocked = jest.spyOn(fuzzy, 'getPrice')
+//getPriceMocked.mockImplementation(() => getPriceMockedImplementation)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
@@ -23,7 +23,7 @@ beforeAll(done => {
 	})
 })
 
-describe.skip('Portfolio', () => {
+describe('Portfolio', () => {
 	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.total_amount).toBe(0)
@@ -41,16 +41,17 @@ describe.skip('Portfolio', () => {
 				expect(aaplItem.amount).toBe(0)
 				
 				fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
+					console.log(aaplItem)
 					expect(aaplItem.amount).toBeGreaterThan(0)
 					expect(aaplItem.price).toBeGreaterThan(0)
 					expect(portfolio.total_amount).toBe(aaplItem.amount)
 					
 					done()
-				})
+				}, getPriceMockedImplementation)
 			})
 		})
 	})
-	test('two assets', done => {
+	test.skip('two assets', done => {
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
@@ -76,7 +77,7 @@ describe.skip('Portfolio', () => {
 			})
 		})
 	})
-	test('alter one', done => {
+	test.skip('alter one', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
@@ -112,7 +113,7 @@ function getPriceMockedImplementation(asset, callback) {
 	callback(price)
 }
 
-describe('Mock', () => {
+describe.skip('Mock', () => {
 	test('without mock', () => {
 		expect(fuzzy.f1()).toBe(1)
 	})
