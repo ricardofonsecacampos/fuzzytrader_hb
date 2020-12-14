@@ -1,20 +1,44 @@
+const baseUrl = 'https://fuzzytrader-app.herokuapp.com/'
+
 function getOrdersForAmount(amount, callback) {
 	if (amount <= 0) return []
 	
+	fetch((baseUrl + 'orders'),
+		{
+			method: "POST",
+			body: {portAmount: 0, portAgresAmount: 0, tradeAmount: amount}
+		})
+		.then(function (response) {
+			console.log(response)
+			response.json()
+			.then(function (assets) {
+				console.log(assets)
+				callback(assets)
+			})
+			.catch(() => {
+				//TODO add error message.
+			})
+		})
+		.catch(() => {
+			//TODO add error message.
+		})
+	/*
 	callback([
 		{symbol:"AAPL", quantity:(amount/135.66).toFixed(), price:"135.66"},
 		{symbol:"BNB", quantity:(amount/183.05).toFixed(5), price:"183.05"},
 		{symbol:"VALE", quantity:(amount/55.0).toFixed(), price:"55.0"}
 	])
+	*/
 }
 
+
 function getPortfolio(callback) {
-	fetch(baseUrl + 'get-portfolio')
+	fetch(baseUrl + 'portfolio/get')
 		.then(function (response) {
 			console.log('from JS: ' + response)
 			response.json()
-			.then(function (pokemon) {
-				callback(response)
+			.then(function (portfolio) {
+				callback(portfolio)
 			})
 			.catch(() => {
 				//TODO add error message.
