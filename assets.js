@@ -5,7 +5,7 @@
 const apiKey = process.env.ASSETS_PRICE_API_KEY
 const apiUrl = process.env.ASSETS_PRICE_API_URL
 
-// NodeJS function for http requests
+// NodeJS function for http requests.
 const request = require("request");
 
 // Retrieves stock quotation given its symbol.
