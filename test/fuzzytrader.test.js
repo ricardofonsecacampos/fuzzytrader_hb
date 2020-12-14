@@ -19,7 +19,7 @@ beforeAll(done => {
 	})
 })
 
-describe('Portfolio', () => {
+describe.skip('Portfolio', () => {
 	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.total_amount).toBe(0)
@@ -105,7 +105,7 @@ describe('Mock', () => {
 	})
 	test('with mock', () => {
 		const f2spy = jest.spyOn(fuzzy, 'f2')
-		f2spy.mockImplementation(() => {console.log(2);return 2})
+		f2spy.mockImplementation(() => {console.log(2); return 2})
 		fuzzy.f2()
 		expect(f2spy).toHaveBeenCalled()
 		expect(fuzzy.f2()).toBe(2)
