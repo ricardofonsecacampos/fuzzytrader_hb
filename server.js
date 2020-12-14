@@ -27,7 +27,8 @@ const server = http.createServer((req, res) => {
 			location += req.url
 			break;
 		  
-		case '/get-portfolio':
+		case '/orders':
+		case '/portfolio/get':
 			serveFile = false
 			break;
 
@@ -43,12 +44,24 @@ const server = http.createServer((req, res) => {
 	res.writeHead(200, { 'content-type': contentType })
 	
 	// serve the requested file.
-	if (serveFile) fs.createReadStream(location).pipe(res)
-	else fuzzy.getPortfolio((portfolio) => {
-		console.log(portfolio)
-		res.end(JSON.stringify(portfolio))
-	})
-
+	if (serveFile)
+		fs.createReadStream(location).pipe(res)
+	else {
+		switch (req.url) {
+			case '/portfolio/get':
+				fuzzy.getPortfolio((portfolio) => {
+					console.log(portfolio)
+					res.end(JSON.stringify(portfolio))
+				})
+				break;
+			case 'orders':
+				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
+					console.log(assets)
+					res.end(JSON.stringify(assets))
+				})
+				break;
+		}
+	}
 }).listen(PORT)
 
 console.log('Node server running on port ' + PORT)
