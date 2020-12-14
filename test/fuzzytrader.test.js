@@ -38,7 +38,7 @@ beforeAll(done => {
 	db.clearPortfolio(response => done())
 })
 
-describe('Portfolio', () => {
+describe.skip('Portfolio', () => {
 	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.total_amount).toBe(0)
