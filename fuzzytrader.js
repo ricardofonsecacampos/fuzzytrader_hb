@@ -9,7 +9,7 @@ function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callb
 	if (amount <= 0) return []
 	
 	let typeSelected = 'agressive'
-	if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount) > 0.2)
+	if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
 		typeSelected = 'conservative'
 
 	dbModule.searchAssets(typeSelected, callback(assets))
