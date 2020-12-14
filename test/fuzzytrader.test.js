@@ -13,8 +13,8 @@ const assets = require('../assets')
 jest.mock('../assets');
 
 // mocking the fuzzy.getPrice() function in order to predict exact prices and amounts.
-//const getPriceMocked = jest.spyOn(fuzzy, 'getPrice')
-//getPriceMocked.mockImplementation(() => getPriceMockedImplementation)
+jest.spyOn(assets, 'getStockPrice').mockImplementation((symbol, callback) => getPriceMockedImplementation)
+jest.spyOn(assets, 'getCryptoPrice').mockImplementation((symbol, callback) => getPriceMockedImplementation)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
