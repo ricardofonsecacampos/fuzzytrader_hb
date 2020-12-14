@@ -3,7 +3,7 @@
 	<link rel="stylesheet" href="styles.css">
 	<title>Fuzzy Trader Home Broker</title>
 	<!-- JQuery -->
-	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<!--script src="https://code.jquery.com/jquery-2.2.3.min.js"></script-->
 	<!-- Fuzzytrader back end functions -->
 	<script src="fuzzytrader-hb.js"></script>
 	<script>
@@ -26,6 +26,8 @@
 			
 			// appends portfolio's asset data.
 			portfolio.assets.forEach((asset) => {
+				if (!asset.quantity) continue
+				
 				let item = document.createElement('div')
 				item.setAttribute('class', 'portfolio')
 				item.setAttribute('id', 'portfolio-item')
