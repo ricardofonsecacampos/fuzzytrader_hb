@@ -41,11 +41,12 @@ const server = http.createServer((req, res) => {
 
 	// starts writing the response.
 	res.writeHead(200, { 'content-type': contentType })
+	
 	// serve the requested file.
 	if (serveFile) fs.createReadStream(location).pipe(res)
 	else fuzzy.getPortfolio((portfolio) => {
 		console.log(portfolio)
-		response.end(portfolio)
+		res.json(portfolio)
 	})
 
 }).listen(PORT)
