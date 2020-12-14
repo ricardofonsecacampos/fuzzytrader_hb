@@ -78,7 +78,7 @@ describe('Portfolio', () => {
 
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.price).toBe(0.50621)
-						expect(xrpItem.amount).toBe(46.043133247197)
+						expect(xrpItem.amount.toFixed(8)).toBe(46.04313325)
 
 						expect(aaplItem.quantity).toBe(300)
 						expect(aaplItem.amount).toBe(36123)
@@ -107,7 +107,7 @@ describe('Portfolio', () => {
 
 						expect(xrpItem.quantity).toBe(90.9565857)
 						expect(xrpItem.price).toBe(0.50621)
-						expect(xrpItem.amount).toBe(46.043133247197)
+						expect(xrpItem.amount.toFixed(8)).toBe(46.04313325)
 						
 						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
 
@@ -126,9 +126,9 @@ describe('Orders', () => {
 		let agressiveAmount = 0
 		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
 			expect(assets.length).toBe(3)
-			expect(assets[0].type).toBe('conservative')
-			expect(assets[1].type).toBe('conservative')
-			expect(assets[2].type).toBe('conservative')
+			expect(assets[0].profile).toBe('conservative')
+			expect(assets[1].profile).toBe('conservative')
+			expect(assets[2].profile).toBe('conservative')
 			done()
 		})
 	})
@@ -138,9 +138,9 @@ describe('Orders', () => {
 		let agressiveAmount = 1000
 		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
 			expect(assets.length).toBe(3)
-			expect(assets[0].type).toBe('agressive')
-			expect(assets[1].type).toBe('agressive')
-			expect(assets[2].type).toBe('agressive')
+			expect(assets[0].profile).toBe('agressive')
+			expect(assets[1].profile).toBe('agressive')
+			expect(assets[2].profile).toBe('agressive')
 			done()
 		})
 	})
