@@ -20,7 +20,7 @@ jest.spyOn(assets, 'getCryptoPrice').mockImplementation((symbol, callback) => ge
 assets.getStockPrice = getPriceMocked
 assets.getCryptoPrice = getPriceMocked
 
-// mocked implementation
+// Mocked implementation.
 function getPriceMocked(symbol, callback) {
 	let price = -1
 	switch (symbol) {
