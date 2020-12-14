@@ -6,8 +6,8 @@
 // nodejs function for http requests
 const request = require("request");
 
-const dbUrl = process.env.DB_URL
-const dbKey = process.env.DB_KEY
+let dbUrl = process.env.DB_URL
+let dbKey = process.env.DB_KEY
 
 function createRequest(collection, httpMethod = "GET") {
 	return {
@@ -119,5 +119,6 @@ function alterPortfolio(item, callback) {
 
 module.exports = {
 	listAssets, searchAssets,
-	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio
+	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio,
+	dbUrl, dbKey
 }
