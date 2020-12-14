@@ -6,7 +6,7 @@ function getOrdersForAmount(amount, callback) {
 	fetch((baseUrl + 'orders'),
 		{
 			method: "POST",
-			body: {portAmount: 0, portAgresAmount: 0, tradeAmount: amount}
+			body: JSON.stringify({portAmount: 0, portAgresAmount: 0, tradeAmount: amount})
 		})
 		.then(function (response) {
 			response.json()
@@ -42,5 +42,23 @@ function getPortfolio(callback) {
 
 function setPriceAndAmount(portfolio, callback) {
 	portfolio.assets.forEach((asset) => {
+		if (asset.quantity) {
+			fetch(baseUrl + 'portfolio/price', {
+				method: "POST",
+				body: {portfolio: portfolio, asset: asset}
+			})
+			.then(function (response) {
+				response.json()
+				.then(function (portfolio) {
+					callback(portfolio)
+				})
+				.catch(() => {
+					//TODO add error message.
+				})
+			})
+			.catch(() => {
+				//TODO add error message.
+			})
+		}
 	})
 }
