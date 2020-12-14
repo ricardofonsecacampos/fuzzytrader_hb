@@ -5,22 +5,14 @@ const dbModule = require('./db')
 // The rationale is to allow up to 20% of total amount invested in high stakes assets.
 // For example, if the portfolio is 80k conservative + 10k agressive, we allow more 10k on agressive assets.
 // So, if the next trade amount is, lets say, 11k, we will only allow conservative assets.
-function getOrdersForAmount(amount, callback) {
+function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callback) {
 	if (amount <= 0) return []
 	
-	getPortfolio((portfolio) => {
-		totalPortfolio = portfolio.total_amount
-		let totalAgressive = 0
-		portfolio.assets.forEach((asset) => {
-			if (asset.amount && asset.type == 'agressive') totalAgressive += asset.amount
-		})
-		
-		let typeSelected = 'agressive'
-		if (((totalAgressive + amount) / totalPortfolio) > 0.2)
-			typeSelected = 'conservative'
-		
-		dbModule.searchAssets(typeSelected, callback(assets))
-	})
+	let typeSelected = 'agressive'
+	if (((agressiveAmount + tradeAmount) / portfolioAmount) > 0.2)
+		typeSelected = 'conservative'
+
+	dbModule.searchAssets(typeSelected, callback(assets))
 }
 
 // Lists available assets and sets the quantity owned by the trader (in his portfolio).
@@ -75,7 +67,11 @@ function addToPortfolio(item, callback) {
 // Used when the quantity is known (portfolio) to get price and total amount of the asset and set them.
 // Sets asset price, amount and total amount of portfolio after its recalculation.
 // Calls the assets module and waits till it respond to call callback.
-function setPriceAndAmount(portfolio, asset, callback) {
+// The last parameter is to allow automated test to fix prices. I used Jest mocked functions, but
+// the function I mocked behaves the way I implemented only if called directly, not through other functions.
+// I mean that I thought it would be enough mocking getPrice() and expecting it to work differently when called by
+// 'setPriceAndAmount()'. But, that didn't happened. My calls to setPriceAndAmount() were ignoring the mocked getPrice().
+function setPriceAndAmount(portfolio, asset, callback, mockedGetPrice) {
 	let setData = function (price) {
 		asset.price = Number(price)
 		asset.amount = Number(asset.quantity * price)
@@ -85,7 +81,8 @@ function setPriceAndAmount(portfolio, asset, callback) {
 		portfolio.total_amount = total
 		callback(asset.price, asset.amount)
 	}
-	getPrice(asset, setData)
+	if (mockedGetPrice) mockedGetPrice(asset, setData)
+	else getPrice(asset, setData)
 }
 
 function getPrice(asset, callback) {
