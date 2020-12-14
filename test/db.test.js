@@ -1,9 +1,9 @@
 // Unit tests of the fuzzytrader app - database operations.
 
-// This is the module to be tested
+// This is the module to be tested.
 const db = require('../db')
 
-// Avoid timeout with the web database (default 5000ms)
+// Avoid timeout with the web database (default 5000ms).
 jest.setTimeout(15000)
 
 // this is the first thing done by Jest, it is executed only once before all tests.
