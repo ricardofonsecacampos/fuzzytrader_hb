@@ -41,7 +41,7 @@ function listAssets(callback) {
 }
 
 // Lists assets after searching by profile.
-//TODO change first parameter to JSON
+//TODO change first parameter to JSON.
 function searchAssets(profile, callback) {
 	let jsonRequest = createAssetsRequest()
 	if (profile) jsonRequest.url += '?q={"profile":"' + profile + '"}'
@@ -129,6 +129,5 @@ function alterPortfolio(item, callback) {
 }
 
 module.exports = {
-	listAssets, searchAssets,
-	clearPortfolio, listPortfolio, addToPortfolio, alterPortfolio
+	listAssets, searchAssets, clearPortfolio, listPortfolio, addToPortfolio, alterPortfolio
 }
