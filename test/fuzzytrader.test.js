@@ -6,8 +6,11 @@ const fuzzy = require('../fuzzytrader')
 // to clear the portfolio before tests.
 const db = require('../db')
 
-// avoid timeout with the web database (default 5000ms) and financial API.
+// avoid timeout (default 5000ms) with the web database and financial API.
 jest.setTimeout(90000)
+
+const assets = require('../assets')
+jest.mock('assets');
 
 // mocking the fuzzy.getPrice() function in order to predict exact prices and amounts.
 //const getPriceMocked = jest.spyOn(fuzzy, 'getPrice')
