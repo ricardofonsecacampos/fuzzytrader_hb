@@ -13,7 +13,7 @@ function getStockPrice(symbol, callback) {
 	}
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
-		if (callback) callback(body['Global Quote']['05. price'])
+		if (callback) callback(Number(body['Global Quote']['05. price']))
 	})
 }
 
@@ -24,7 +24,7 @@ function getCryptoPrice(symbol, callback) {
 	}
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
-		if (callback) callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+		if (callback) callback(Number(body['Realtime Currency Exchange Rate']['5. Exchange Rate']))
 	})
 }
 
