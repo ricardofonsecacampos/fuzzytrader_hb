@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
 	console.log(req.url)
-	console.log(req.params)
+	console.log(req.body)
 	
 	let location = 'frontend'
 	let serveFile = true
