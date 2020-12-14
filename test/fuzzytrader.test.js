@@ -16,6 +16,9 @@ jest.mock('../assets');
 jest.spyOn(assets, 'getStockPrice').mockImplementation((symbol, callback) => getPriceMockedImplementation)
 jest.spyOn(assets, 'getCryptoPrice').mockImplementation((symbol, callback) => getPriceMockedImplementation)
 
+assets.getStockPrice = getPriceMockedImplementation
+assets.getCryptoPrice = getPriceMockedImplementation
+
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
 	// avoid running tests on not test databases.
