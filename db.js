@@ -3,12 +3,14 @@
 // are made over HTTP methods GET (to fetch data), POST (to include data),
 // PUT (to update data) and DELETE (to remove data).
 
-// nodejs function for http requests
+// NodeJS function for http requests
 const request = require("request");
 
+// Database connection properties.
 let dbUrl = process.env.DB_URL
 let dbKey = process.env.DB_KEY
 
+// Creates a general request for the HTTP database.
 function createRequest(collection, httpMethod = "GET") {
 	return {
 		method: httpMethod,
@@ -22,18 +24,23 @@ function createRequest(collection, httpMethod = "GET") {
 	}
 }
 
+// Request for the 'portfolio' collection.
 function createPortfolioRequest(operation) {
 	return createRequest('portfolio', operation)
 }
 
+// Request for the 'assets' collection.
 function createAssetsRequest(operation) {
 	return createRequest('assets', operation)
 }
 
+// Lists all available assets for the trader, that is the entire 'assets' collection.
+// Structure: {symbol:'aaa', description:'aaa company', profile:'agressive', type:'crypto'}
 function listAssets(callback) {
 	return searchAssets(null, callback)
 }
 
+// Lists assets after searching by profile.
 //TODO change first parameter to JSON
 function searchAssets(profile, callback) {
 	let jsonRequest = createAssetsRequest()
@@ -62,10 +69,13 @@ function clearPortfolio(callback) {
 	})
 }
 
+// Lists all items in the portfolio, that is the entire 'portfolio' collection.
+// Structure: {symbol:aaa, quantity:222}
 function listPortfolio(callback) {
 	return searchPortfolio(null, callback)
 }
 
+// Retrieves one item of the portfolio after searching by symbol.
 function searchPortfolio(symbol, callback) {
 	let jsonRequest = createPortfolioRequest()
 	if (symbol) jsonRequest.url += '?q={"symbol":"' + symbol + '"}'
@@ -76,8 +86,8 @@ function searchPortfolio(symbol, callback) {
 	})                    
 }
 
-// Saves to the portfolio collection.
-// Expected item JSON: {symbol:aaa, quantity:333}
+// Saves to the portfolio collection. Adds another item.
+// Expected item JSON: {symbol:'aaa', quantity:333}
 function addToPortfolio(item, callback) {
 	let jsonRequest = createPortfolioRequest("POST")
 	jsonRequest.body = item
@@ -102,6 +112,7 @@ function alterPortfolio(item, callback) {
 }
 */
 
+// Used to set the quantity of an asset already present in the portfolio.
 function alterPortfolio(item, callback) {
 	if (item._id) {
 		let jsonRequest = createPortfolioRequest("DELETE")
@@ -119,6 +130,5 @@ function alterPortfolio(item, callback) {
 
 module.exports = {
 	listAssets, searchAssets,
-	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio,
-	dbUrl, dbKey
+	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio
 }
