@@ -1,11 +1,13 @@
 // module for retrieving stock and cryptocurrency quotes on the internet.
 // using the Alpha Advantage API.
+// the two functions must be mocked for automated tests.
 
 const apiKey = process.env.ASSETS_PRICE_API_KEY
 const apiUrl = process.env.ASSETS_PRICE_API_URL
 
 const request = require("request");
 
+// retrieves stock quotation given its symbol.
 function getStockPrice(symbol, callback) {
 	jsonRequest = {
 		json: true,
@@ -17,6 +19,8 @@ function getStockPrice(symbol, callback) {
 	})
 }
 
+// retrieves cryptocurrency value is US dollars.
+// see 'www.alphavantage.co' for information about exchanges and more.
 function getCryptoPrice(symbol, callback) {
 	jsonRequest = {
 		json: true,
