@@ -9,15 +9,25 @@ const db = require('../db')
 // avoid timeout (default 5000ms) with the web database and financial API.
 jest.setTimeout(90000)
 
+// mocks the assets module to be certain about assets quotation and assertive tests.
 const assets = require('../assets')
 jest.mock('../assets');
 
-// mocking the fuzzy.getPrice() function in order to predict exact prices and amounts.
-jest.spyOn(assets, 'getStockPrice').mockImplementation((symbol, callback) => getPriceMockedImplementation)
-jest.spyOn(assets, 'getCryptoPrice').mockImplementation((symbol, callback) => getPriceMockedImplementation)
+jest.spyOn(assets, 'getStockPrice').mockImplementation((symbol, callback) => getPriceMocked)
+jest.spyOn(assets, 'getCryptoPrice').mockImplementation((symbol, callback) => getPriceMocked)
 
-assets.getStockPrice = getPriceMockedImplementation
-assets.getCryptoPrice = getPriceMockedImplementation
+assets.getStockPrice = getPriceMocked
+assets.getCryptoPrice = getPriceMocked
+
+function getPriceMocked(asset, callback) {
+	console.log(asset)
+	let price = -1
+	switch (asset.symbol) {
+		case 'AAPL': price = 120.41; break;
+		case 'XRP': price = 0.50621; break;
+	}
+	callback(price)
+}
 
 // this is the first thing done by Jest, it is executed only once before all tests.
 beforeAll(done => {	
@@ -107,30 +117,6 @@ describe('Portfolio', () => {
 				})
 			})
 		})
-	})
-})
-
-function getPriceMockedImplementation(asset, callback) {
-	let price = -1
-	switch (asset.symbol) {
-		case 'AAPL': price = 120.41; break;
-		case 'XRP': price = 0.50621; break;
-	}
-	callback(price)
-}
-
-describe.skip('Mock', () => {
-	test('without mock', () => {
-		expect(fuzzy.f1()).toBe(1)
-	})
-	test('with mock', () => {
-		const f2spy = jest.spyOn(fuzzy, 'f2')
-		f2spy.mockImplementation(() => {console.log(2); return 2})
-		fuzzy.f2()
-		expect(f2spy).toHaveBeenCalled()
-		expect(fuzzy.f2()).toBe(2)
-		fuzzy.f2 = f2spy
-		expect(fuzzy.f1()).toBe(2)
 	})
 })
 
