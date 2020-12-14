@@ -19,10 +19,10 @@ jest.spyOn(assets, 'getCryptoPrice').mockImplementation((symbol, callback) => ge
 assets.getStockPrice = getPriceMocked
 assets.getCryptoPrice = getPriceMocked
 
-function getPriceMocked(asset, callback) {
-	console.log(asset)
+// mocked implementation
+function getPriceMocked(symbol, callback) {
 	let price = -1
-	switch (asset.symbol) {
+	switch (symbol) {
 		case 'AAPL': price = 120.41; break;
 		case 'XRP': price = 0.50621; break;
 	}
@@ -34,13 +34,11 @@ beforeAll(done => {
 	// avoid running tests on not test databases.
 	//expect(db.dbUrl).toMatch('test')
 	
-	db.clearPortfolio((response) => {
-		done()
-	})
+	db.clearPortfolio(response => done())
 })
 
 describe('Portfolio', () => {
-	test.skip('empty', done => {
+	test('empty', done => {
 		fuzzy.getPortfolio((portfolio) => {
 			expect(portfolio.total_amount).toBe(0)
 			expect(portfolio.assets.length).toBe(6)
@@ -57,9 +55,8 @@ describe('Portfolio', () => {
 				expect(aaplItem.amount).toBe(0)
 				
 				fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
-					console.log(aaplItem)
-					expect(aaplItem.amount).toBeGreaterThan(0)
-					expect(aaplItem.price).toBeGreaterThan(0)
+					expect(aaplItem.price).toBe(120.41)
+					expect(aaplItem.amount).toBe(36123)
 					expect(portfolio.total_amount).toBe(aaplItem.amount)
 					
 					done()
@@ -67,7 +64,7 @@ describe('Portfolio', () => {
 			})
 		})
 	})
-	test.skip('two assets', done => {
+	test('two assets', done => {
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let xrpItem = getAssetInPortfolio(portfolio, 'XRP')
@@ -77,15 +74,14 @@ describe('Portfolio', () => {
 					fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
 
 						expect(xrpItem.quantity).toBe(90.9565857)
-						expect(xrpItem.amount).toBeGreaterThan(0)
-						expect(xrpItem.price).toBeGreaterThan(0)
+						expect(xrpItem.price).toBe(0.50621)
+						expect(xrpItem.amount).toBe(46,043133247197)
 
 						expect(aaplItem.quantity).toBe(300)
-						expect(aaplItem.amount).toBeGreaterThan(0)
-						expect(aaplItem.price).toBeGreaterThan(0)
+						expect(aaplItem.amount).toBe(36123)
+						expect(aaplItem.price).toBe(120.41)
 
-						expect(portfolio.total_amount).toBe(
-							aaplItem.amount + xrpItem.amount)
+						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
 
 						done()
 					})
@@ -93,7 +89,7 @@ describe('Portfolio', () => {
 			})
 		})
 	})
-	test.skip('alter one', done => {
+	test('alter one', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = getAssetInPortfolio(portfolio, 'AAPL')
@@ -103,12 +99,12 @@ describe('Portfolio', () => {
 					
 				fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
 					fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
-						expect(aaplItem.amount).toBeGreaterThan(0)
-						expect(aaplItem.price).toBeGreaterThan(0)
+						expect(aaplItem.amount).toBe(9668923)
+						expect(aaplItem.price).toBe(120.41)
 
 						expect(xrpItem.quantity).toBe(90.9565857)
-						expect(xrpItem.amount).toBeGreaterThan(0)
-						expect(xrpItem.price).toBeGreaterThan(0)
+						expect(xrpItem.price).toBe(0.50621)
+						expect(xrpItem.amount).toBe(46,043133247197)
 						
 						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
 
@@ -120,23 +116,40 @@ describe('Portfolio', () => {
 	})
 })
 
-describe.skip('Orders', () => {
-	test('empty', done => {
-		let amount = 1000
-		fuzzy.getOrdersForAmount(amount, (orders) => {
-			expect(orders.length).toBe(3)
-			
-			expect(orders[0].symbol).toBe('AAPL')
-			expect(orders[0].quantity).toBe(Math.trunc(amount / 135.66))
-			expect(orders[0].price).toBe(135.66)
-			
-			expect(orders[1].symbol).toBe('BNB')
-			expect(orders[1].quantity).toBe((amount / 183.05).toFixed(5))
-			expect(orders[1].price).toBe(183.05)
-			
-			expect(orders[2].symbol).toBe('VALE')
-			expect(orders[2].quantity).toBe(Math.trunc(amount / 55.0))
-			expect(orders[2].price).toBe(55.0)
+describe('Orders', () => {
+	test('initial trade', done => {
+		let tradeAmount = 1000
+		let portfolioAmount = 0
+		let agressiveAmount = 0
+		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
+			expect(assets.length).toBe(3)
+			expect(assets[0].type).toBe('conservative')
+			expect(assets[1].type).toBe('conservative')
+			expect(assets[2].type).toBe('conservative')
+			done()
+		})
+	})
+	test('conservative portfolio', done => {
+		let tradeAmount = 1000
+		let portfolioAmount = 9000
+		let agressiveAmount = 1000
+		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
+			expect(assets.length).toBe(3)
+			expect(assets[0].type).toBe('agressive')
+			expect(assets[1].type).toBe('agressive')
+			expect(assets[2].type).toBe('agressive')
+			done()
+		})
+	})
+	test('agressive portfolio', done => {
+		let tradeAmount = 1000
+		let portfolioAmount = 8000
+		let agressiveAmount = 1000
+		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
+			expect(assets.length).toBe(3)
+			expect(assets[0].type).toBe('conservative')
+			expect(assets[1].type).toBe('conservative')
+			expect(assets[2].type).toBe('conservative')
 			done()
 		})
 	})
