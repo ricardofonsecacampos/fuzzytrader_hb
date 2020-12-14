@@ -107,7 +107,7 @@ describe('Portfolio', () => {
 function getPriceMockedImplementation(asset, callback) {
 	let price = -1
 	switch (asset.symbol) {
-		case 'AAPL': price = 122.41; break;
+		case 'AAPL': price = 120.41; break;
 		case 'XRP': price = 0.50621; break;
 	}
 	callback(price)
