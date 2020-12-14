@@ -31,6 +31,7 @@ const server = http.createServer((req, res) => {
 		case '/orders':
 		case '/portfolio/get':
 		case '/portfolio/price':
+		case '/portfolio/add':
 			serveFile = false
 			break;
 
@@ -56,7 +57,7 @@ const server = http.createServer((req, res) => {
 				})
 				break;
 			case '/portfolio/price':
-				fuzzy.getPriceAndAmount((portfolio) => {
+				fuzzy.setPriceAndAmount((portfolio) => {
 					console.log(portfolio)
 					res.end(JSON.stringify(portfolio))
 				})
