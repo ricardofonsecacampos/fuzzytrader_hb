@@ -45,6 +45,7 @@ const server = http.createServer((req, res) => {
 	if (serveFile) fs.createReadStream(location).pipe(res)
 	else fuzzy.getPortfolio((portfolio) => {
 		console.log(portfolio)
+		response.end(portfolio)
 	})
 
 }).listen(PORT)
