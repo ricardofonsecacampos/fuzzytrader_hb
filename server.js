@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
 	console.log(req.url)
+	console.log(req.params)
+	
 	let location = 'frontend'
 	let serveFile = true
 	let contentType = 'application/json'
@@ -61,7 +63,6 @@ const server = http.createServer((req, res) => {
 				break;
 			case '/orders':
 				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
-					console.log(req)
 					res.end(JSON.stringify(assets))
 				})
 				break;
