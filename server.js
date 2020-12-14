@@ -8,7 +8,7 @@ const fs = require('fs')
 const PORT = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
-  console.log(req.path)
+  console.log(req)
   
   // serve the HTML application page
   res.writeHead(200, { 'content-type': 'text/html' })
