@@ -130,5 +130,5 @@ function alterPortfolio(item, callback) {
 
 module.exports = {
 	listAssets, searchAssets,
-	clearPortfolio, listPortfolio, searchPortfolio, addToPortfolio, alterPortfolio
+	clearPortfolio, listPortfolio, addToPortfolio, alterPortfolio
 }
