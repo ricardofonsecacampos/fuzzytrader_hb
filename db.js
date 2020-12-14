@@ -3,7 +3,7 @@
 // are made over HTTP methods GET (to fetch data), POST (to include data),
 // PUT (to update data) and DELETE (to remove data).
 
-// NodeJS function for http requests
+// NodeJS function for http requests.
 const request = require("request");
 
 // Database connection properties.
@@ -35,7 +35,7 @@ function createAssetsRequest(operation) {
 }
 
 // Lists all available assets for the trader, that is the entire 'assets' collection.
-// Structure: {symbol:'aaa', description:'aaa company', profile:'agressive', type:'crypto'}
+// Structure: {symbol:'aaa', description:'aaa company', profile:'agressive', type:'crypto'}.
 function listAssets(callback) {
 	return searchAssets(null, callback)
 }
