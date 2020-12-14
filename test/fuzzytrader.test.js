@@ -150,9 +150,9 @@ describe('Orders', () => {
 		let agressiveAmount = 1000
 		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
 			expect(assets.length).toBe(3)
-			expect(assets[0].type).toBe('conservative')
-			expect(assets[1].type).toBe('conservative')
-			expect(assets[2].type).toBe('conservative')
+			expect(assets[0].typrofilepe).toBe('conservative')
+			expect(assets[1].profile).toBe('conservative')
+			expect(assets[2].profile).toBe('conservative')
 			done()
 		})
 	})
