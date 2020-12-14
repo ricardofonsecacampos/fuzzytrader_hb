@@ -10,7 +10,7 @@ const db = require('../db')
 jest.setTimeout(90000)
 
 const assets = require('../assets')
-jest.mock('assets');
+jest.mock('../assets');
 
 // mocking the fuzzy.getPrice() function in order to predict exact prices and amounts.
 //const getPriceMocked = jest.spyOn(fuzzy, 'getPrice')
