@@ -26,17 +26,17 @@
 			
 			// appends portfolio's asset data.
 			portfolio.assets.forEach((asset) => {
-				if (!asset.quantity) continue
-				
-				let item = document.createElement('div')
-				item.setAttribute('class', 'portfolio')
-				item.setAttribute('id', 'portfolio-item')
-				outer.appendChild(item)
+				if (asset.quantity) {
+					let item = document.createElement('div')
+					item.setAttribute('class', 'portfolio')
+					item.setAttribute('id', 'portfolio-item')
+					outer.appendChild(item)
 
-				setDivText(item, asset.symbol)
-				setDivText(item, asset.quantity)
-				setDivText(item, asset.price)
-				setDivText(item, asset.amount)
+					setDivText(item, asset.symbol)
+					setDivText(item, asset.quantity)
+					setDivText(item, asset.price)
+					setDivText(item, asset.amount)
+				}
 			})
 			
 			// sets portfolio total.
