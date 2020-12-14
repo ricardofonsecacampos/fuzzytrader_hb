@@ -67,6 +67,7 @@
 		
 		// Callback function used to update orders infos based on json received from back end.
 		// Setting the symbol to empty disables the order.
+		//TODO let the list be dynamic, it is set to 3 elements.
 		const setOrders = function (orders) {
 			for (var i = 1; i < 4; i++) {
 				let divs = document.getElementById('order-'+ i).getElementsByTagName('div')
@@ -77,7 +78,10 @@
 			}
 		}
 		
-		
+		function addMessage(msg) {
+			let d = new Date();
+			let time = d.getHours() + 'h' + d.getMinutes() + 'm' + d.getSeconds() + 's'
+		}
 	</script>
 </head>
 <body>
@@ -149,8 +153,8 @@
 			<div title="Message text">Message</div>
 		</div>
 		<div class="message" id="message">
-			<div><script>d = newDate(); document.write(d.getHours()+'h'+d.getMinutes()+'m'+d.getSeconds()+'s'</script></div>
-			<div></div>
+			<div>20h41m00s</div>
+			<div>Welcome to Fuzzy Trade Home Broker! Check your portfolio and start trading!</div>
 		</div>
 	</div>
 </body>
