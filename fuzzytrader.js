@@ -24,6 +24,7 @@ function getPortfolio(callback) {
 			assets.forEach((asset) => {
 				asset.quantity = 0
 				asset.amount = 0
+				asset.price = 0
 				
 				// tries to find the asset in the portfolio.
 				assetsPortfolio.forEach((item) => {
