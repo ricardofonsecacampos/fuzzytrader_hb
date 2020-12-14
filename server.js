@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
 	console.log(req.url)
-	console.log(req.body)
+	req.on('data', chunk => {
+		console.log('A chunk of data has arrived: ', chunk)
+	})
 	
 	let location = 'frontend'
 	let serveFile = true
@@ -57,10 +59,10 @@ const server = http.createServer((req, res) => {
 				})
 				break;
 			case '/portfolio/price':
-				fuzzy.setPriceAndAmount((portfolio) => {
-					console.log(portfolio)
-					res.end(JSON.stringify(portfolio))
-				})
+				//fuzzy.setPriceAndAmount((portfolio) => {
+				//	console.log(portfolio)
+				//	res.end(JSON.stringify(portfolio))
+				//})
 				break;
 			case '/orders':
 				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
