@@ -1,6 +1,7 @@
 // Module for retrieving stock and cryptocurrency quotes on the internet.
 // Using the Alpha Vantage API.
 // The two functions must be mocked for automated tests.
+// If the API blocks the request, we set 999.99 prices.
 
 const apiKey = process.env.ASSETS_PRICE_API_KEY
 const apiUrl = process.env.ASSETS_PRICE_API_URL
