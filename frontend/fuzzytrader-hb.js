@@ -1,7 +1,7 @@
 const baseUrl = 'https://fuzzytrader-app.herokuapp.com/'
 
 function getOrdersForAmount(amount, callback) {
-	if (amount <= 0) return []
+	if (!Number(amount) || amount <= 0) return []
 	
 	fetch((baseUrl + 'orders'), {
 		headers: {
