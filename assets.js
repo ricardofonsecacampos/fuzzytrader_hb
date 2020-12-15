@@ -35,7 +35,13 @@ function getCryptoPrice(symbol, callback) {
 	}
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
-		if (callback) callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+		if (callback) {
+			try {
+				callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+			} catch {
+				callback(999.99)
+			}
+		}
 	})
 }
 
