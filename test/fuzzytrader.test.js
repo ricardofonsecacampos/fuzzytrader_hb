@@ -162,7 +162,7 @@ describe('Orders', () => {
 			done()
 		})
 	})
-	test.skip('agressive portfolio', done => {
+	test('agressive portfolio', done => {
 		let tradeAmount = 1000
 		let portfolioAmount = 8000
 		let agressiveAmount = 1000
