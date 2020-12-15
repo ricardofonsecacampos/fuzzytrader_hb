@@ -61,8 +61,6 @@ function getPortfolio(callback) {
 					asset.price = 0
 				}
 			})
-			console.log('portfolio=')
-			console.log(portfolio)
 			fillPortfolioPricesAndAmounts(portfolio, callback)
 		})
 	})
@@ -71,7 +69,6 @@ function getPortfolio(callback) {
 // Recursive function to set all prices and amounts of the portfolio.
 function fillPortfolioPricesAndAmounts(portfolio, callback) {
 	let asset = nextAssetWithoutPrice(portfolio.assets)
-	console.log('asset='+asset)
 	
 	if (!asset) {
 		let total = 0
@@ -81,7 +78,6 @@ function fillPortfolioPricesAndAmounts(portfolio, callback) {
 	}
 	
 	getPrice(asset, (price) => {
-		console.log('price='+price)
 		asset.price = Number(price)
 		asset.amount = Number(asset.quantity * price)
 		fillPortfolioPricesAndAmounts(portfolio, callback)
