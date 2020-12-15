@@ -66,7 +66,7 @@
 			let amount = document.getElementsByTagName('input')['amount'].value
 			let emptyOrder = {symbol:"",price:"",quantity:""}
 			
-			if (!amount || amount <= 0) return setOrders([emptyOrder,emptyOrder,emptyOrder])
+			if (!Number(amount) || amount <= 0) return setOrders([emptyOrder,emptyOrder,emptyOrder])
 			
 			getOrdersForAmount(amount, setOrders)
 		}
@@ -94,6 +94,8 @@
 		}
 		
 		function addMessage(msg) {
+			let msgDiv = document.getElementById('messages')
+			msgDiv.removeChild(msgDiv.children[2])
 			let d = new Date();
 			let time = d.getHours() + 'h' + d.getMinutes() + 'm' + d.getSeconds() + 's'
 		}
@@ -161,7 +163,7 @@
 		</div>
 	</div>
 	<p><br></p>
-	<div align="center">
+	<div align="center" id="messages">
 		<div style="color: blue;"><b>Messages</b></div>
 		<div class="message">
 			<div title="Time of the event">Time</div>
