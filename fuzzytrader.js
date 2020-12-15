@@ -99,6 +99,8 @@ function nextAssetWithoutPrice(assets) {
 	return assetWP
 }
 
+// Insert or updates one asset in the portfolio.
+// If the asset already exists, then increments its quantity.
 function addToPortfolio(item, callback) {
 	dbModule.listPortfolio((portfolio) => {
 		let existingItem = getAssetInList(portfolio, item.symbol)
