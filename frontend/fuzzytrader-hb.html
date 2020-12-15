@@ -42,6 +42,7 @@
 					setDivText(item, Number(asset.quantity).toFixed(quantityPrecision))
 					setDivText(item, Number(asset.price).toFixed(pricePrecision))
 					setDivText(item, Number(asset.amount).toFixed(2))
+					item.setAttribute('title', '(' + asset.type + ', ' + asset.profile + ') ' + asset.description)
 				}
 			})
 			
@@ -166,14 +167,19 @@
 	<div align="center" id="messages">
 		<div style="color: blue;"><b>Messages</b></div>
 		<div class="message" id="message">
+			<div>Welcome to Fuzzy Trade Home Broker! Check your portfolio and start trading!
+				We take care to balance your portfolio with up to 20% of high stakes assets on it.
+			</div>
+		</div>
+		<div class="message" id="message">
 			<div>Please be patient if you see prices of 999.99. That means the quotation service is very busy
-				and needs some time to receive the quotation again. So, in this case, wait about 15 secondes
+				and needs some time to receive the quotation again. So, in this case, wait about 15 seconds
 				and update your amount again or reload the page to see your updated portfolio.
 			</div>
 		</div>
 		<div class="message" id="message">
-			<div>Welcome to Fuzzy Trade Home Broker! Check your portfolio and start trading!
-				We take care to balance your portfolio with up to 20% of high stakes assets on it.
+			<div>We consider as conservative assets: AAPL and VALE stock, and BNB crypto currency.
+				We consider as high stakes assets: KODK stock, and BTC and XRP crypto currency.
 			</div>
 		</div>
 	</div>
