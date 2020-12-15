@@ -14,11 +14,11 @@ const fuzzy = require('./fuzzytrader.js')
 const PORT = process.env.PORT || 3000
 
 
-function getPostJsonParams(request) {
+function getPostJsonParams(request, callback) {
 	if (request.method == 'POST') {
 		let body = ''
 		req.on('data', chunk => {body += chunk.toString()})
-		req.on('end', () => return JSON.parse(body))
+		req.on('end', () => callback(JSON.parse(body)))
 	}
 }
 
@@ -76,12 +76,12 @@ const server = http.createServer((req, res) => {
 				})
 				break;
 			case '/orders':
-				param = getPostJsonParams(req)
-				console.log(param)
-				console.log(param.trade_amount)
-				fuzzy.getOrdersForAmount(param.trade_amount, (assets) => {
-					console.log('orders')
-					res.end(JSON.stringify(assets))
+				getPostJsonParams(req, (param) => {
+					console.log(param)
+					fuzzy.getOrdersForAmount(param.trade_amount, (assets) => {
+						console.log('orders')
+						res.end(JSON.stringify(assets))
+					})
 				})
 				break;
 			default: 
