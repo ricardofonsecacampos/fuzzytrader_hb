@@ -5,7 +5,7 @@ const http = require('http')
 // Serve static files.
 const fs = require('fs')
 // Parse request parameters.
-const { parse } = require('querystring');
+const parse = require('querystring');
 
 // Fuzzy trader services
 const fuzzy = require('./fuzzytrader.js')
@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
 		})
 		req.on('end', () => {
 			console.log(parse(body))
+			console.log(JSON.parse(parse(body)))
 		})
 	}
 	
@@ -74,6 +75,7 @@ const server = http.createServer((req, res) => {
 				//	console.log(portfolio)
 				//	res.end(JSON.stringify(portfolio))
 				//})
+					res.end(JSON.stringify(portfolio))
 				break;
 			case '/orders':
 				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
