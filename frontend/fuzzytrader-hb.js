@@ -29,7 +29,7 @@ function getPortfolio(callback) {
 			response.json()
 			.then(function (portfolio) {
 				callback(portfolio)
-				setPriceAndAmount(portfolio, callback)
+				//setPriceAndAmount(portfolio, callback)
 			})
 			.catch(() => {
 				//TODO add error message.
@@ -39,19 +39,17 @@ function getPortfolio(callback) {
 			//TODO add error message.
 		})
 }
-
+/*
 function setPriceAndAmount(portfolio, callback) {
 	portfolio.assets.forEach((asset) => {
 		if (asset.quantity) {
 			fetch(baseUrl + 'portfolio/price', {
 				method: "POST",
-				body: {portfolio: portfolio, asset: asset}
+				body: {symbol: asset.symbol}
 			})
 			.then(function (response) {
 				response.json()
-				.then(function (portfolio) {
-					callback(portfolio)
-				})
+				.then(callback(portfolio))
 				.catch(() => {
 					//TODO add error message.
 				})
@@ -62,3 +60,4 @@ function setPriceAndAmount(portfolio, callback) {
 		}
 	})
 }
+*/
