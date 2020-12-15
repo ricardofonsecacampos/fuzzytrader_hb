@@ -152,8 +152,8 @@ function getAssetInList(list, symbol) {
 }
 
 // Outside available functions.
-module.exports = { getOrdersForAmount,
-		  getPortfolio, addToPortfolio,
-		  setPriceAndAmount,
-		  getAssetInPortfolio, getAssetInList
-		 }
+module.exports = {
+	getOrdersForAmount,
+	getPortfolio, addToPortfolio,
+	getAssetInPortfolio, getAssetInList
+}
