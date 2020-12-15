@@ -14,7 +14,7 @@ function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callb
 
 	dbModule.searchAssets(typeSelected, (assets) => {
 		assets.forEach(asset => asset.amount = tradeAmount)
-		fillAssetsPricesAndQuantities(assets)
+		fillAssetsPricesAndQuantities(assets, callback)
 	})
 }
 
