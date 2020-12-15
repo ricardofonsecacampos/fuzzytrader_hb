@@ -125,7 +125,7 @@ describe('Orders', () => {
 				
 			let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
 			expect(bnbItem.amount).toBe(1000)
-			expect(bnbItem.price).toBe(0.50621)
+			expect(bnbItem.price).toBe(30.02514623)
 			expect(bnbItem.quantity.toFixed(8)).toBe(1975,46472808)
 			
 			let valeItem = fuzzy.getAssetInList(assets, 'VALE')
@@ -151,10 +151,10 @@ describe('Orders', () => {
 			expect(kodkItem.price).toBe(9.69)
 			expect(kodkItem.quantity).toBe(206)
 				
-			let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
+			let bnbItem = fuzzy.getAssetInList(assets, 'XRP')
 			expect(bnbItem.amount).toBe(2000)
-			expect(bnbItem.price).toBe(30.02514623)
-			expect(bnbItem.quantity.toFixed(8)).toBe(66,61083296)
+			expect(bnbItem.price).toBe(0.50621)
+			expect(bnbItem.quantity.toFixed(8)).toBe(3950,92945615)
 			
 			let btcItem = fuzzy.getAssetInList(assets, 'BTC')
 			expect(btcItem.amount).toBe(2000)
