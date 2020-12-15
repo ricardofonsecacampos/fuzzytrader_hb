@@ -35,3 +35,8 @@ It was really hard to automate the test of high level operations (exposed to the
 # 5
 Next step is to connect the application (HTML page) to my functions and provide some front end automated tests to guarantee it is working fine (maybe Selenium).
 
+# 6
+Done! App page connecting to tested services through the NodeJS server. Lost to much time changing the list operations to be recursive and bring all prices at once.
+Finally, I couln't dinamically set messages on the page and didn't have time to finish the automated integration test with Selenium.
+One real problem with this app is that the quotation API (alphavantage.co) often blocks my requests and I don't get prices! In these cases, I am setting prices to 999.99 and avoiding trades. After some 15 ou 20 seconds, the service allows me more requests.
+
