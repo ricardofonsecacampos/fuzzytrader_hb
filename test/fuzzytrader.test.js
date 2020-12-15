@@ -26,6 +26,10 @@ function getPriceMocked(symbol, callback) {
 	switch (symbol) {
 		case 'AAPL': price = 120.41; break;
 		case 'XRP': price = 0.50621; break;
+		case 'VALE': price = 16.46; break;
+		case 'BTC': price = 19481.61; break;
+		case 'BNB': price = 30.02514623; break;
+		case 'KODK': price = 9.69; break;
 	}
 	callback(price)
 }
@@ -103,8 +107,8 @@ describe('Portfolio', () => {
 	})
 })
 
-describe.skip('Orders', () => {
-	test('initial trade', done => {
+describe('Orders', () => {
+	test('initial trade (conservative)', done => {
 		let tradeAmount = 1000
 		let portfolioAmount = 0
 		let agressiveAmount = 0
@@ -113,22 +117,53 @@ describe.skip('Orders', () => {
 			expect(assets[0].profile).toBe('conservative')
 			expect(assets[1].profile).toBe('conservative')
 			expect(assets[2].profile).toBe('conservative')
+			
+			let aaplItem = fuzzy.getAssetInList(assets, 'AAPL')
+			expect(aaplItem.amount).toBe(1000)
+			expect(aaplItem.price).toBe(120.41)
+			expect(aaplItem.quantity).toBe(8)
+				
+			let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
+			expect(bnbItem.amount).toBe(1000)
+			expect(bnbItem.price).toBe(0.50621)
+			expect(bnbItem.quantity.toFixed(8)).toBe(1975,46472808)
+			
+			let valeItem = fuzzy.getAssetInList(assets, 'VALE')
+			expect(valeItem.amount).toBe(1000)
+			expect(valeItem.price).toBe(16.46)
+			expect(valeItem.quantity).toBe(60)
+			
 			done()
 		})
 	})
 	test('conservative portfolio', done => {
-		let tradeAmount = 1000
-		let portfolioAmount = 9000
-		let agressiveAmount = 1000
+		let tradeAmount = 2000
+		let portfolioAmount = 18000
+		let agressiveAmount = 2000
 		fuzzy.getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, (assets) => {
 			expect(assets.length).toBe(3)
 			expect(assets[0].profile).toBe('agressive')
 			expect(assets[1].profile).toBe('agressive')
 			expect(assets[2].profile).toBe('agressive')
+			
+			let kodkItem = fuzzy.getAssetInList(assets, 'KODK')
+			expect(kodkItem.amount).toBe(2000)
+			expect(kodkItem.price).toBe(9.69)
+			expect(kodkItem.quantity).toBe(206)
+				
+			let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
+			expect(bnbItem.amount).toBe(2000)
+			expect(bnbItem.price).toBe(30.02514623)
+			expect(bnbItem.quantity.toFixed(8)).toBe(66,61083296)
+			
+			let btcItem = fuzzy.getAssetInList(assets, 'BTC')
+			expect(btcItem.amount).toBe(2000)
+			expect(btcItem.price).toBe(19481.61)
+			expect(btcItem.quantity.toFixed(8)).toBe(0,10266092)
 			done()
 		})
 	})
-	test('agressive portfolio', done => {
+	test.skip('agressive portfolio', done => {
 		let tradeAmount = 1000
 		let portfolioAmount = 8000
 		let agressiveAmount = 1000
