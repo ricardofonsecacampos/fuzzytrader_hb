@@ -7,10 +7,6 @@ const fs = require('fs')
 // Parse request parameters.
 const {parse} = require('querystring');
 
-const express = require('express')
-const app = express()
-app.use(express.json())
-
 // Fuzzy trader services
 const fuzzy = require('./fuzzytrader.js')
 
@@ -27,7 +23,7 @@ const server = http.createServer((req, res) => {
 		})
 		req.on('end', () => {
 			let params = parse(body)
-			console.log(params)
+			console.log(params.match(/\d+\.?\d*/g))
 		})
 	}
 	
