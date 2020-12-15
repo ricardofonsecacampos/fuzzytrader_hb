@@ -5,7 +5,7 @@ function getOrdersForAmount(amount, callback) {
 	
 	fetch((baseUrl + 'orders'), {
 		method: "POST",
-		body: JSON.stringify({tradeAmount: amount})
+		body: JSON.stringify({trade_amount: amount})
 	})
 		.then(function (response) {
 			response.json()
