@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
 			body += chunk.toString()
 		})
 		req.on('end', () => {
-			let params = parse(body)
+			let params = parse(body).toString()
 			console.log(params)
 			console.log(params.match(/\d+\.?\d*/g))
 		})
