@@ -14,6 +14,9 @@
 		// The first thing to do is bring current portfolio data for the trader.
 		window.onload = updatePortfolio
 		
+		// Last suggested orders, used to send the order.
+		let suggestedOrders = null
+		
 		// Callback function to update the data of portfolio assets and total shown to the trader.
 		// Clears the portfolio table then adds the portfolio asset's data again.
 		const setPortfolio = function (portfolio) {
@@ -32,8 +35,8 @@
 					item.setAttribute('id', 'portfolio-item')
 					outer.appendChild(item)
 					
-					let pricePrecision = (orders[i-1].type == 'stock' ? 2 : 5)
-					let quantityPrecision = (orders[i-1].type == 'stock' ? 0 : 5)
+					let pricePrecision = (asset.type == 'stock' ? 2 : 5)
+					let quantityPrecision = (asset.type == 'stock' ? 0 : 5)
 
 					setDivText(item, asset.symbol)
 					setDivText(item, Number(asset.quantity).toFixed(quantityPrecision))
@@ -72,6 +75,8 @@
 		// Setting the symbol to empty disables the order.
 		//TODO let the list be dynamic, it is set to 3 elements.
 		const setOrders = function (orders) {
+			suggestedOrders = orders
+			
 			for (var i = 1; i < 4; i++) {
 				let divs = document.getElementById('order-'+ i).getElementsByTagName('div')
 				let pricePrecision = (orders[i-1].type == 'stock' ? 2 : 5)
@@ -82,6 +87,10 @@
 				divs[2].innerText = Number(orders[i-1].price).toFixed(pricePrecision)
 				divs[3].innerText = Number(orders[i-1].quantity).toFixed(quantityPrecision)
 			}
+		}
+		
+		function addPortfolio(num) {
+			console.log(suggestedOrders[num-1])
 		}
 		
 		function addMessage(msg) {
@@ -133,19 +142,19 @@
 			<div title="Quantity to be bought with the amount entered">Quantity</div>
 		</div>
 		<div class="order" id="order-1">
-			<div><button disabled=true>BUY</button></div>
+			<div><button disabled='true' onclick='addPortfolio(1)'>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
 		</div>
 		<div class="order" id="order-2">
-			<div><button disabled=true>BUY</button></div>
+			<div><button disabled=true onclick='addPortfolio(2)'>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
 		</div>
 		<div class="order" id="order-3">
-			<div><button disabled=true>BUY</button></div>
+			<div><button disabled=true onclick='addPortfolio(3)'>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
