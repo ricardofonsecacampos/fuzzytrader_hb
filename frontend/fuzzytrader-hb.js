@@ -10,8 +10,8 @@ function getOrdersForAmount(amount, callback) {
 	})
 		.then(function (response) {
 			response.json()
-			.then(function () {
-				callback()
+			.then(function (assets) {
+				callback(assets)
 			})
 			.catch(() => {
 				//TODO add error message.
@@ -47,8 +47,8 @@ function addToPortfolio(asset, callback) {
 	})
 		.then(function (response) {
 			response.json()
-			.then(function () {
-				callback()
+			.then(function (a) {
+				callback(a)
 			})
 			.catch(() => {
 				//TODO add error message.
