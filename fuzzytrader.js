@@ -14,7 +14,7 @@ function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callb
 
 	dbModule.searchAssets(typeSelected, callback)
 }
-
+/*
 // Lists available assets and sets the quantity owned by the trader (in his portfolio).
 // The price and amount of each asset must be set after calling this function. Here they are set to 0.
 function getPortfolio(callback) {
@@ -39,33 +39,52 @@ function getPortfolio(callback) {
 		})
 	})
 }
-
-function addToPortfolio(item, callback) {
-	dbModule.listPortfolio((portfolio) => {
-		let existingItem = getAssetInList(portfolio, item.symbol)
-		
-		if (existingItem) {
-			existingItem.quantity += item.quantity
-			dbModule.alterPortfolio(existingItem, callback)
-		} else {
-			dbModule.addToPortfolio(item, callback)
-		}
+*/
+// Lists available assets and sets the quantity owned by the trader (in his portfolio).
+// The price and amount of each asset is set at the end.
+// Pops available assets not present in the portfolio.
+function getPortfolio(callback) {
+	dbModule.listAssets((assets) => {		
+		// sets quantity.
+		dbModule.listPortfolio((assetsPortfolio) => {
+			// creates the portfolio JSON
+			let portfolio = {total_amount: 0}
+			portfolio.assets = []
+			
+			assets.forEach((asset) => {
+				let assetInPortfolio = getAssetInList(assetsPortfolio, asset.symbol)
+				if (assetInPortfolio) {
+					portfolio.assets.push(asset)
+					
+					asset.quantity = assetInPortfolio.quantity
+					asset.amount = 0
+					asset.price = 0
+				}
+			})
+			
+			fillPortfolioPricesAndAmounts(portfolio, callback)
+		})
 	})
 }
 
-function getPortfolioWithPrice(symbol, callback) {
-	getPortfolio((portfolio) => {
-		let asset = getAssetInPortfolio(portfolio, symbol)
-		getPrice(asset, (price) => {
-			asset.price = Number(price)
-			asset.amount = Number(asset.quantity * price)
-			
-			let total = 0
-			portfolio.assets.forEach((item) => { total += item.amount })
-			portfolio.total_amount = total
-			callback(portfolio)
-		})
-	})
+// Recursive function to set all prices and amounts of the portfolio.
+function fillPortfolioPricesAndAmounts(portfolio, callback) {
+	let asset = nextAssetWithoutPrice(portfolio.assets)
+	
+	if (!asset) {
+		let total = 0
+		portfolio.assets.forEach((item) => { total += item.amount })
+		portfolio.total_amount = total
+		return callback(portfolio)
+	}
+	
+	getPrice(asset, (price) => {
+		asset.price = Number(price)
+		asset.amount = Number(asset.quantity * price)
+		fillPortfolioPricesAndAmounts(portfolio, callback)
+	}
+		
+	
 }
 
 // Used when the quantity is known (portfolio) to get the price and calculate the amount of the asset.
@@ -83,6 +102,31 @@ function setPriceAndAmount(portfolio, asset, callback) {
 	getPrice(asset, setData)
 }
 
+// Uses the assets module to retrieve the price of a stock or cryptocurrency.
+function getPrice(asset, callback) {
+	if (asset.type == 'stock')
+		assetsModule.getStockPrice(asset.symbol, callback)
+	else if (asset.type == 'crypto')
+		assetsModule.getCryptoPrice(asset.symbol, callback)
+}
+
+function nextAssetWithoutPrice(assets) {
+	assets.forEach(asset => { if (!asset.price) return asset })
+}
+
+function addToPortfolio(item, callback) {
+	dbModule.listPortfolio((portfolio) => {
+		let existingItem = getAssetInList(portfolio, item.symbol)
+		
+		if (existingItem) {
+			existingItem.quantity += item.quantity
+			dbModule.alterPortfolio(existingItem, callback)
+		} else {
+			dbModule.addToPortfolio(item, callback)
+		}
+	})
+}
+
 // Used when the amount is known (order) to get the price and calculate the quantity.
 // Sets asset price and quantity.
 function setPriceAndQuantity(amount, asset, callback) {
@@ -93,14 +137,6 @@ function setPriceAndQuantity(amount, asset, callback) {
 		callback(asset.price, asset.quantity)
 	}
 	getPrice(asset, setData)
-}
-
-// Uses the assets module to retrieve the price of a stock or cryptocurrency.
-function getPrice(asset, callback) {
-	if (asset.type == 'stock')
-		assetsModule.getStockPrice(asset.symbol, callback)
-	else if (asset.type == 'crypto')
-		assetsModule.getCryptoPrice(asset.symbol, callback)
 }
 	
 // Utility functions
