@@ -89,8 +89,8 @@
 			}
 		}
 		
-		function addPortfolio(num) {
-			console.log(suggestedOrders[num-1])
+		function buy(num) {
+			addToPortfolio(suggestedOrders[num-1], setPortfolio)
 		}
 		
 		function addMessage(msg) {
@@ -142,19 +142,19 @@
 			<div title="Quantity to be bought with the amount entered">Quantity</div>
 		</div>
 		<div class="order" id="order-1">
-			<div><button disabled='true' onclick='addPortfolio(1)'>BUY</button></div>
+			<div><button disabled='true' onclick='buy(1)'>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
 		</div>
 		<div class="order" id="order-2">
-			<div><button disabled=true onclick='addPortfolio(2)'>BUY</button></div>
+			<div><button disabled=true onclick='buy(2)'>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
 		</div>
 		<div class="order" id="order-3">
-			<div><button disabled=true onclick='addPortfolio(3)'>BUY</button></div>
+			<div><button disabled=true onclick='buy(3)'>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
