@@ -9,6 +9,7 @@ const apiUrl = process.env.ASSETS_PRICE_API_URL
 const request = require("request");
 
 // Retrieves stock quotation given its symbol.
+// See 'www.alphavantage.co' for more information.
 function getStockPrice(symbol, callback) {
 	jsonRequest = {
 		json: true,
@@ -20,6 +21,7 @@ function getStockPrice(symbol, callback) {
 			try {
 				callback(body['Global Quote']['05. price'])
 			} catch {
+				// the API sometimes doesn't respond due to frequency limitation.
 				callback(999.99)
 			}
 		}
@@ -39,6 +41,7 @@ function getCryptoPrice(symbol, callback) {
 			try {
 				callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
 			} catch {
+				// the API sometimes doesn't respond due to frequency limitation.
 				callback(999.99)
 			}
 		}
