@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 3000
 function getPostJsonParams(request, callback) {
 	if (request.method == 'POST') {
 		let body = ''
-		req.on('data', chunk => {body += chunk.toString()})
-		req.on('end', () => callback(JSON.parse(body)))
+		request.on('data', chunk => {body += chunk.toString()})
+		request.on('end', () => callback(JSON.parse(body)))
 	}
 }
 
