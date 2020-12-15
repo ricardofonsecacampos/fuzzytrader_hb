@@ -4,6 +4,8 @@
 const http = require('http')
 // Serve static files.
 const fs = require('fs')
+// Parse request parameters.
+const { parse } = require('querystring');
 
 // Fuzzy trader services
 const fuzzy = require('./fuzzytrader.js')
@@ -20,7 +22,7 @@ const server = http.createServer((req, res) => {
 			body += chunk.toString()
 		})
 		req.on('end', () => {
-			console.log(body)
+			console.log(parse(body))
 		})
 	}
 	
