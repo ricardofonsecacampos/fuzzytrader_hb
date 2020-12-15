@@ -12,7 +12,7 @@
 		// This code deals with HTML and calls business logic functions imported from another file.
 		
 		// The first thing to do is bring current portfolio data for the trader.
-		window.onload = updatePortfolio
+		window.onload = { updatePortfolio, updateOrders }
 		
 		// Callback function to update the data of portfolio assets and total shown to the trader.
 		// Clears the portfolio table then adds the portfolio asset's data again.
@@ -41,7 +41,7 @@
 			
 			// sets portfolio total.
 			outer.appendChild(total)
-			document.querySelector('#portfolio-total').children[3].innerText = portfolio.total_amount
+			document.querySelector('#portfolio-total').children[3].innerText = Math.round(portfolio.total_amount)
 		}
 		
 		function setDivText(outer, data) {
