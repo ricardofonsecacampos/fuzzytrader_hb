@@ -80,6 +80,9 @@ const server = http.createServer((req, res) => {
 					res.end(JSON.stringify(assets))
 				})
 				break;
+			default: 
+					console.log('end()')
+					res.end()
 		}
 	}
 }).listen(PORT)
