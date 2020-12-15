@@ -66,16 +66,19 @@ const server = http.createServer((req, res) => {
 		switch (req.url) {
 			case '/portfolio/get':
 				fuzzy.getPortfolio((portfolio) => {
+					console.log('get')
 					res.end(JSON.stringify(portfolio))
 				})
 				break;
 			case '/portfolio/add':
 				fuzzy.addToPortfolio({symbol:'AAPL', quantity:100}, () => {
+					console.log('get')
 					res.end('')
 				})
 				break;
 			case '/orders':
 				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
+					console.log('orders')
 					res.end(JSON.stringify(assets))
 				})
 				break;
