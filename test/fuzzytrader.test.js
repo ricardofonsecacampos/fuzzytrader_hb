@@ -108,54 +108,58 @@ describe('Portfolio', () => {
 })
 
 describe('Orders', () => {
-	test.skip('initial trade (conservative)', done => {
-		let tradeAmount = 1000
-		fuzzy.getOrdersForAmount(tradeAmount, (assets) => {
-			expect(assets.length).toBe(3)
-			expect(assets[0].profile).toBe('conservative')
-			expect(assets[1].profile).toBe('conservative')
-			expect(assets[2].profile).toBe('conservative')
-			
-			let aaplItem = fuzzy.getAssetInList(assets, 'AAPL')
-			expect(aaplItem.amount).toBe(1000)
-			expect(aaplItem.price).toBe(120.41)
-			expect(aaplItem.quantity).toBe(8)
-				
-			let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
-			expect(bnbItem.amount).toBe(1000)
-			expect(bnbItem.price).toBe(30.02514623)
-			expect(Number(bnbItem.quantity.toFixed(8))).toBe(33.30541648)
-			
-			let valeItem = fuzzy.getAssetInList(assets, 'VALE')
-			expect(valeItem.amount).toBe(1000)
-			expect(valeItem.price).toBe(16.46)
-			expect(valeItem.quantity).toBe(60)
-			done()
+	test('empty portfolio (conservative trade)', done => {
+		db.clearPortfolio(response => {
+			let tradeAmount = 1000
+			fuzzy.getOrdersForAmount(tradeAmount, (assets) => {
+				expect(assets.length).toBe(3)
+				expect(assets[0].profile).toBe('conservative')
+				expect(assets[1].profile).toBe('conservative')
+				expect(assets[2].profile).toBe('conservative')
+
+				let aaplItem = fuzzy.getAssetInList(assets, 'AAPL')
+				expect(aaplItem.amount).toBe(1000)
+				expect(aaplItem.price).toBe(120.41)
+				expect(aaplItem.quantity).toBe(8)
+
+				let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
+				expect(bnbItem.amount).toBe(1000)
+				expect(bnbItem.price).toBe(30.02514623)
+				expect(Number(bnbItem.quantity.toFixed(8))).toBe(33.30541648)
+
+				let valeItem = fuzzy.getAssetInList(assets, 'VALE')
+				expect(valeItem.amount).toBe(1000)
+				expect(valeItem.price).toBe(16.46)
+				expect(valeItem.quantity).toBe(60)
+				done()
+			})
 		})
 	})
 	test('conservative portfolio', done => {
-		let tradeAmount = 2000
-		fuzzy.getOrdersForAmount(tradeAmount, (assets) => {
-			expect(assets.length).toBe(3)
-			expect(assets[0].profile).toBe('agressive')
-			expect(assets[1].profile).toBe('agressive')
-			expect(assets[2].profile).toBe('agressive')
-			
-			let kodkItem = fuzzy.getAssetInList(assets, 'KODK')
-			expect(kodkItem.amount).toBe(2000)
-			expect(kodkItem.price).toBe(9.69)
-			expect(kodkItem.quantity).toBe(206)
-				
-			let bnbItem = fuzzy.getAssetInList(assets, 'XRP')
-			expect(bnbItem.amount).toBe(2000)
-			expect(bnbItem.price).toBe(0.50621)
-			expect(Number(bnbItem.quantity.toFixed(8))).toBe(3950.92945615)
-			
-			let btcItem = fuzzy.getAssetInList(assets, 'BTC')
-			expect(btcItem.amount).toBe(2000)
-			expect(btcItem.price).toBe(19481.61)
-			expect(Number(btcItem.quantity.toFixed(8))).toBe(0.10266092)
-			done()
+		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
+			let tradeAmount = 2000
+			fuzzy.getOrdersForAmount(tradeAmount, (assets) => {
+				expect(assets.length).toBe(3)
+				expect(assets[0].profile).toBe('agressive')
+				expect(assets[1].profile).toBe('agressive')
+				expect(assets[2].profile).toBe('agressive')
+
+				let kodkItem = fuzzy.getAssetInList(assets, 'KODK')
+				expect(kodkItem.amount).toBe(2000)
+				expect(kodkItem.price).toBe(9.69)
+				expect(kodkItem.quantity).toBe(206)
+
+				let bnbItem = fuzzy.getAssetInList(assets, 'XRP')
+				expect(bnbItem.amount).toBe(2000)
+				expect(bnbItem.price).toBe(0.50621)
+				expect(Number(bnbItem.quantity.toFixed(8))).toBe(3950.92945615)
+
+				let btcItem = fuzzy.getAssetInList(assets, 'BTC')
+				expect(btcItem.amount).toBe(2000)
+				expect(btcItem.price).toBe(19481.61)
+				expect(Number(btcItem.quantity.toFixed(8))).toBe(0.10266092)
+				done()
+			})
 		})
 	})
 	test.skip('agressive portfolio', done => {
