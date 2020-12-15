@@ -53,6 +53,21 @@ function addToPortfolio(item, callback) {
 	})
 }
 
+function getPortfolioWithPrice(symbol, callback) {
+	getPortfolio((portfolio) => {
+		let asset = getAssetInPortfolio(portfolio, symbol)
+		getPrice(asset, (price) => {
+			asset.price = Number(price)
+			asset.amount = Number(asset.quantity * price)
+			
+			let total = 0
+			portfolio.assets.forEach((item) => { total += item.amount })
+			portfolio.total_amount = total
+			callback(portfolio)
+		})
+	})
+}
+
 // Used when the quantity is known (portfolio) to get the price and calculate the amount of the asset.
 // Sets asset price, amount and total amount of portfolio after its recalculation.
 function setPriceAndAmount(portfolio, asset, callback) {
@@ -63,7 +78,7 @@ function setPriceAndAmount(portfolio, asset, callback) {
 		let total = 0
 		portfolio.assets.forEach((item) => { total += item.amount })
 		portfolio.total_amount = total
-		callback(asset.price, asset.amount)
+		callback(portfolio)
 	}
 	getPrice(asset, setData)
 }
@@ -102,4 +117,4 @@ function getAssetInList(list, symbol) {
 	return asset
 }
 
-module.exports = { getOrdersForAmount, getPortfolio, addToPortfolio, setPriceAndAmount }
+module.exports = { getOrdersForAmount, getPortfolio, getPortfolioWithPrice, addToPortfolio, setPriceAndAmount }
