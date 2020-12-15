@@ -44,8 +44,8 @@ function addToPortfolio(asset, callback) {
 	})
 		.then(function (response) {
 			response.json()
-			.then(function (portfolio) {
-				callback(portfolio)
+			.then(function () {
+				callback()
 			})
 			.catch(() => {
 				//TODO add error message.
