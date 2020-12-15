@@ -97,7 +97,9 @@ function getPrice(asset, callback) {
 }
 
 function nextAssetWithoutPrice(assets) {
-	assets.forEach(asset => { if (!asset.price) return asset })
+	let assetWP = null
+	assets.forEach(asset => { if (!asset.price) assetWP = asset })
+	return assetWP
 }
 
 function addToPortfolio(item, callback) {
