@@ -4,12 +4,8 @@ function getOrdersForAmount(amount, callback) {
 	if (!Number(amount) || amount <= 0) return []
 	
 	fetch((baseUrl + 'orders'), {
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
 		method: "POST",
-		body: JSON.stringify({portAmount: 0, portAgresAmount: 0, tradeAmount: amount})
+		body: JSON.stringify({tradeAmount: amount})
 	})
 		.then(function (response) {
 			response.json()
