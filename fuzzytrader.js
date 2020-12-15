@@ -5,16 +5,24 @@ const dbModule = require('./db')
 // The rationale is to allow up to 20% of total amount invested in high stakes assets.
 // For example, if the portfolio is 80k conservative + 10k agressive, we allow more 10k on agressive assets.
 // So, if the next trade amount is, lets say, 11k, we will only allow conservative assets.
-function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callback) {
+function getOrdersForAmount(tradeAmount, callback) {
 	if (tradeAmount <= 0) return []
 	
-	let typeSelected = 'agressive'
-	if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
-		typeSelected = 'conservative'
+	getPortfolio((portfolio) => {
+		agressiveAmount = 0
+		portfolio.assets.forEach((asset) => {
+			if (asset.profile == 'agressive') agressiveAmount += asset.amount
+		})
+		portfolioAmount = portfolio.total_amount	
+	
+		let typeSelected = 'agressive'
+		if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
+			typeSelected = 'conservative'
 
-	dbModule.searchAssets(typeSelected, (assets) => {
-		assets.forEach(asset => asset.amount = tradeAmount)
-		fillAssetsPricesAndQuantities(assets, callback)
+		dbModule.searchAssets(typeSelected, (assets) => {
+			assets.forEach(asset => asset.amount = tradeAmount)
+			fillAssetsPricesAndQuantities(assets, callback)
+		})
 	})
 }
 
