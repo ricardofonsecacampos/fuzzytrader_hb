@@ -61,7 +61,6 @@ function getPortfolio(callback) {
 					asset.price = 0
 				}
 			})
-			
 			fillPortfolioPricesAndAmounts(portfolio, callback)
 		})
 	})
@@ -83,23 +82,6 @@ function fillPortfolioPricesAndAmounts(portfolio, callback) {
 		asset.amount = Number(asset.quantity * price)
 		fillPortfolioPricesAndAmounts(portfolio, callback)
 	}
-		
-	
-}
-
-// Used when the quantity is known (portfolio) to get the price and calculate the amount of the asset.
-// Sets asset price, amount and total amount of portfolio after its recalculation.
-function setPriceAndAmount(portfolio, asset, callback) {
-	let setData = function (price) {
-		asset.price = Number(price)
-		asset.amount = Number(asset.quantity * price)
-		
-		let total = 0
-		portfolio.assets.forEach((item) => { total += item.amount })
-		portfolio.total_amount = total
-		callback(portfolio)
-	}
-	getPrice(asset, setData)
 }
 
 // Uses the assets module to retrieve the price of a stock or cryptocurrency.
@@ -127,6 +109,7 @@ function addToPortfolio(item, callback) {
 	})
 }
 
+/*
 // Used when the amount is known (order) to get the price and calculate the quantity.
 // Sets asset price and quantity.
 function setPriceAndQuantity(amount, asset, callback) {
@@ -138,13 +121,28 @@ function setPriceAndQuantity(amount, asset, callback) {
 	}
 	getPrice(asset, setData)
 }
-	
-// Utility functions
 
+// Used when the quantity is known (portfolio) to get the price and calculate the amount of the asset.
+// Sets asset price, amount and total amount of portfolio after its recalculation.
+function setPriceAndAmount(portfolio, asset, callback) {
+	let setData = function (price) {
+		asset.price = Number(price)
+		asset.amount = Number(asset.quantity * price)
+		
+		let total = 0
+		portfolio.assets.forEach((item) => { total += item.amount })
+		portfolio.total_amount = total
+		callback(portfolio)
+	}
+	getPrice(asset, setData)
+}
+*/
+	
+// Utility functions.
 function getAssetInPortfolio(portfolio, symbol) {
 	return getAssetInList(portfolio.assets, symbol)
 }
-
+	
 function getAssetInList(list, symbol) {
 	let asset = null
 	list.forEach((item) => {
@@ -153,4 +151,9 @@ function getAssetInList(list, symbol) {
 	return asset
 }
 
-module.exports = { getOrdersForAmount, getPortfolio, getPortfolioWithPrice, addToPortfolio, setPriceAndAmount }
+// Outside available functions.
+module.exports = { getOrdersForAmount,
+		  getPortfolio, addToPortfolio,
+		  setPriceAndAmount,
+		  getAssetInPortfolio, getAssetInList
+		 }
