@@ -13,20 +13,17 @@ const fuzzy = require('./fuzzytrader.js')
 // use the port Heroku indicates
 const PORT = process.env.PORT || 3000
 
+
+function getPostJsonParams(request) {
+	if (request.method == 'POST') {
+		let body = ''
+		req.on('data', chunk => {body += chunk.toString()})
+		req.on('end', () => return JSON.parse(body))
+	}
+}
+
 const server = http.createServer((req, res) => {
 	console.log(req.url)
-	
-	if (req.method == 'POST') {
-		let body = ''
-		req.on('data', chunk => {
-			body += chunk.toString()
-		})
-		req.on('end', () => {
-			//let params = parse(body).toString()
-			console.log(body)
-			//console.log(params.match(/\d+\.?\d*/g))
-		})
-	}
 	
 	let location = 'frontend'
 	let serveFile = true
@@ -79,7 +76,10 @@ const server = http.createServer((req, res) => {
 				})
 				break;
 			case '/orders':
-				fuzzy.getOrdersForAmount(1000, (assets) => {
+				param = getPostJsonParams(req)
+				console.log(param)
+				console.log(param.trade_amount)
+				fuzzy.getOrdersForAmount(param.trade_amount, (assets) => {
 					console.log('orders')
 					res.end(JSON.stringify(assets))
 				})
