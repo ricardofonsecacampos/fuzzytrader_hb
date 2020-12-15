@@ -90,7 +90,7 @@
 		}
 		
 		function buy(num) {
-			addToPortfolio(suggestedOrders[num-1], setPortfolio)
+			addToPortfolio(suggestedOrders[num-1], () => updatePortfolio())
 		}
 		
 		function addMessage(msg) {
