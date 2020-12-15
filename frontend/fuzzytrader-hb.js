@@ -45,7 +45,7 @@ function addToPortfolio(asset, callback) {
 		method: "POST",
 		body: JSON.stringify({symbol: asset.symbol, quantity: asset.quantity})
 	})
-		.then(callback())
+		.then(callback)
 		.catch(() => {
 			//TODO add error message.
 		})
