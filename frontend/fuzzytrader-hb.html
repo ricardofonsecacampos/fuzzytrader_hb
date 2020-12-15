@@ -33,9 +33,9 @@
 					outer.appendChild(item)
 
 					setDivText(item, asset.symbol)
-					setDivText(item, asset.quantity)
-					setDivText(item, asset.price)
-					setDivText(item, asset.amount)
+					setDivText(Math.round(item, asset.quantity, 5))
+					setDivText(Math.round(item, asset.price, 5))
+					setDivText(Math.round(item, asset.amount, 5))
 				}
 			})
 			
@@ -73,8 +73,8 @@
 				let divs = document.getElementById('order-'+ i).getElementsByTagName('div')
 				divs[0].getElementsByTagName('button')[0].disabled = !orders[i-1].symbol
 				divs[1].innerText = orders[i-1].symbol
-				divs[2].innerText = orders[i-1].price
-				divs[3].innerText = orders[i-1].quantity
+				divs[2].innerText = Math.round(orders[i-1].price, 5)
+				divs[3].innerText = Math.round(orders[i-1].quantity, 5)
 			}
 		}
 		
