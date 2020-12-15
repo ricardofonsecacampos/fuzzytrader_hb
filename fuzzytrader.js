@@ -81,7 +81,7 @@ function fillPortfolioPricesAndAmounts(portfolio, callback) {
 		asset.price = Number(price)
 		asset.amount = Number(asset.quantity * price)
 		fillPortfolioPricesAndAmounts(portfolio, callback)
-	}
+	})
 }
 
 // Uses the assets module to retrieve the price of a stock or cryptocurrency.
