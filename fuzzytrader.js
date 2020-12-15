@@ -12,34 +12,28 @@ function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callb
 	if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
 		typeSelected = 'conservative'
 
-	dbModule.searchAssets(typeSelected, callback)
-}
-/*
-// Lists available assets and sets the quantity owned by the trader (in his portfolio).
-// The price and amount of each asset must be set after calling this function. Here they are set to 0.
-function getPortfolio(callback) {
-	dbModule.listAssets((assets) => {		
-		// sets quantity.
-		dbModule.listPortfolio((assetsPortfolio) => {
-			assets.forEach((asset) => {
-				asset.quantity = 0
-				asset.amount = 0
-				asset.price = 0
-				
-				// tries to find the asset in the portfolio.
-				assetsPortfolio.forEach((item) => {
-					if (item.symbol == asset.symbol) asset.quantity = item.quantity
-				}) 
-			})
-			
-			// creates the portfolio JSON
-			let jsonPortfolio = {total_amount: 0}
-			jsonPortfolio.assets = assets
-			callback(jsonPortfolio)
-		})
+	dbModule.searchAssets(typeSelected, (assets) => {
+		assets.forEach(asset => asset.amount = tradeAmount)
+		fillAssetsPricesAndQuantities(assets)
 	})
 }
-*/
+
+// Recursive function to set all prices and quantities of an assets lists.
+// Used to set orders given an amount to trade.
+function fillAssetsPricesAndQuantities(assets, callback) {
+	let asset = nextAssetWithoutPrice(assets.assets)
+	if (!asset) {
+		return callback(assets)
+	}
+	getPrice(asset, (price) => {
+		asset.price = Number(price)
+		asset.quantity = (
+			(asset.type == 'stock') ? Math.trunc(asset.amount / price) : Number(asset.amount / price)
+		)
+		fillAssetsPricesAndQuantities(assets, callback)
+	})
+}
+
 // Lists available assets and sets the quantity owned by the trader (in his portfolio).
 // The price and amount of each asset is set at the end.
 // Pops available assets not present in the portfolio.
@@ -69,14 +63,12 @@ function getPortfolio(callback) {
 // Recursive function to set all prices and amounts of the portfolio.
 function fillPortfolioPricesAndAmounts(portfolio, callback) {
 	let asset = nextAssetWithoutPrice(portfolio.assets)
-	
 	if (!asset) {
 		let total = 0
 		portfolio.assets.forEach((item) => { total += item.amount })
 		portfolio.total_amount = total
 		return callback(portfolio)
 	}
-	
 	getPrice(asset, (price) => {
 		asset.price = Number(price)
 		asset.amount = Number(asset.quantity * price)
@@ -92,6 +84,7 @@ function getPrice(asset, callback) {
 		assetsModule.getCryptoPrice(asset.symbol, callback)
 }
 
+// Used by recursive functions to walk through unpriced assets.
 function nextAssetWithoutPrice(assets) {
 	let assetWP = null
 	assets.forEach(asset => { if (!asset.price) assetWP = asset })
