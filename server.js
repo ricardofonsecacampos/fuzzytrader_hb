@@ -27,33 +27,31 @@ const server = http.createServer((req, res) => {
 	}
 	
 	let location = 'frontend'
-	let serveFile = false
+	let serveFile = true
 	let contentType = 'application/json'
   
 	switch (req.url) {      
 		case '/styles.css':
 			contentType = 'text/css'
 			location += req.url
-			serveFile = true
 			break;
       
 		case '/fuzzytrader-hb.js':
 			contentType = 'text/javascript'
 			location += req.url
-			serveFile = true
+			break;
+			
+		case '':
+		case '/':
+			contentType = 'text/html'
+			location += '/fuzzytrader-hb.html'
 			break;
 		  
 		case '/orders':
 		case '/portfolio/add':
-			serveFile = false
-			break;
-
-		case '':
-		case '/':
+		case '/portfolio/get':
 		default:
-			contentType = 'text/html'
-			location += '/fuzzytrader-hb.html'
-			serveFile = true
+			serveFile = false
 			break;
 	}
 
@@ -61,9 +59,10 @@ const server = http.createServer((req, res) => {
 	res.writeHead(200, { 'content-type': contentType })
 	
 	// serve the requested file.
-	if (serveFile)
+	if (serveFile) {
+		console.log('file')
 		fs.createReadStream(location).pipe(res)
-	else {
+	} else {
 		switch (req.url) {
 			case '/portfolio/get':
 				fuzzy.getPortfolio((portfolio) => {
