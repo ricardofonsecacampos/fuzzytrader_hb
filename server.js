@@ -1,7 +1,11 @@
 // HTTP server to link the application HTML page to services in NodeJS functions.
 
+// Http server module.
 const http = require('http')
+// Serve static files.
 const fs = require('fs')
+// Help parsing POST parameters.
+const concat = require('concat-stream')
 
 // Fuzzy trader services
 const fuzzy = require('./fuzzytrader.js')
@@ -11,8 +15,10 @@ const PORT = process.env.PORT || 3000
 
 const server = http.createServer((req, res) => {
 	console.log(req.url)
-	req.on('data', chunk => {
-		console.log('A chunk of data has arrived: ', chunk)
+	
+	concat(req, buffer => {
+		let data = JSON.parse(buffer.toString())
+		console.log('Data: ', data)
 	})
 	
 	let location = 'frontend'
