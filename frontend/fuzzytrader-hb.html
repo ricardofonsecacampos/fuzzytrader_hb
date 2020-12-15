@@ -33,9 +33,9 @@
 					outer.appendChild(item)
 
 					setDivText(item, asset.symbol)
-					setDivText(Math.round(item, asset.quantity, 5))
-					setDivText(Math.round(item, asset.price, 5))
-					setDivText(Math.round(item, asset.amount, 5))
+					setDivText(item, asset.quantity.toFixed(5))
+					setDivText(item, asset.price.toFixed(5))
+					setDivText(item, asset.amount.toFixed(5))
 				}
 			})
 			
@@ -73,8 +73,8 @@
 				let divs = document.getElementById('order-'+ i).getElementsByTagName('div')
 				divs[0].getElementsByTagName('button')[0].disabled = !orders[i-1].symbol
 				divs[1].innerText = orders[i-1].symbol
-				divs[2].innerText = Math.round(orders[i-1].price, 5)
-				divs[3].innerText = Math.round(orders[i-1].quantity, 5)
+				divs[2].innerText = orders[i-1].price.toFixed(5)
+				divs[3].innerText = orders[i-1].quantity.toFixed(5)
 			}
 		}
 		
@@ -128,21 +128,21 @@
 		</div>
 		<div class="order" id="order-1">
 			<div><button>BUY</button></div>
-			<div>GLDUS</div>
-			<div>1680.75</div>
-			<div>12.20</div>
+			<div></div>
+			<div></div>
+			<div></div>
 		</div>
 		<div class="order" id="order-2">
 			<div><button>BUY</button></div>
-			<div>AAPL</div>
-			<div>257.8</div>
-			<div>120</div>
+			<div></div>
+			<div></div>
+			<div></div>
 		</div>
 		<div class="order" id="order-3">
 			<div><button>BUY</button></div>
-			<div>BTCUSD</div>
-			<div>18900.75</div>
-			<div>0.5687697</div>
+			<div></div>
+			<div></div>
+			<div></div>
 		</div>
 	</div>
 	<p><br></p>
