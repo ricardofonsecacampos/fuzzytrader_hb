@@ -75,7 +75,9 @@ const server = http.createServer((req, res) => {
 				//	console.log(portfolio)
 				//	res.end(JSON.stringify(portfolio))
 				//})
+				fuzzy.getPortfolioWithPrice('AAPL', (portfolio) => {
 					res.end(JSON.stringify(portfolio))
+				})
 				break;
 			case '/orders':
 				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
