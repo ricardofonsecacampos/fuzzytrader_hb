@@ -1,7 +1,7 @@
 {
   "name": "fuzzytrader-app",
   "description": "Web application to simulate the development of an asset and cryptocurrencies portfolio.",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "main": "server.js",
   "engines": {
     "node": "12.16.3",
