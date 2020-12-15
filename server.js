@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
 		})
 		req.on('end', () => {
 			let params = parse(body)
+			console.log(params)
 			console.log(params.match(/\d+\.?\d*/g))
 		})
 	}
@@ -78,7 +79,7 @@ const server = http.createServer((req, res) => {
 				})
 				break;
 			case '/orders':
-				fuzzy.getOrdersForAmount(0, 0, 1000, (assets) => {
+				fuzzy.getOrdersForAmount(1000, (assets) => {
 					console.log('orders')
 					res.end(JSON.stringify(assets))
 				})
