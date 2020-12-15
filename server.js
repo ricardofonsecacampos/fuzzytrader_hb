@@ -5,7 +5,7 @@ const http = require('http')
 // Serve static files.
 const fs = require('fs')
 // Parse request parameters.
-const parse = require('querystring');
+const {parse} = require('querystring');
 
 // Fuzzy trader services
 const fuzzy = require('./fuzzytrader.js')
