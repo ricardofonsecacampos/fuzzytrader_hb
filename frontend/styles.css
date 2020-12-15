@@ -1,0 +1,44 @@
+body {	
+	font-family: Verdana;
+	font-size: 12px;
+	margin: 0;
+	background: darkgray;
+}
+
+h1 {
+	margin-top: 20px;
+	text-align: center;
+	font-size: 20px;
+	text-shadow: 1px 1px white;
+}
+
+.portfolio, .order-amount, .order, .message {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	max-width: 400px;
+	margin: auto;
+	background: gray;
+	border: 1px black solid;
+}
+
+.portfolio:nth-child(even), .order:nth-child(odd) {
+    background: lightgray;
+}
+
+.portfolio:last-child, .portfolio:first-child {
+    background: white;
+}
+
+.order-amount {
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.message {
+	grid-template-columns: 1fr;
+}
+
+button {
+	font-size: 8px;
+	font-weight: bold;
+}
+
