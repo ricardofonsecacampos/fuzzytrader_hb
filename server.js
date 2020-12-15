@@ -27,23 +27,23 @@ const server = http.createServer((req, res) => {
 	}
 	
 	let location = 'frontend'
-	let serveFile = true
+	let serveFile = false
 	let contentType = 'application/json'
   
 	switch (req.url) {      
 		case '/styles.css':
 			contentType = 'text/css'
 			location += req.url
+			serveFile = true
 			break;
       
 		case '/fuzzytrader-hb.js':
 			contentType = 'text/javascript'
 			location += req.url
+			serveFile = true
 			break;
 		  
 		case '/orders':
-		case '/portfolio/get':
-		case '/portfolio/price':
 		case '/portfolio/add':
 			serveFile = false
 			break;
@@ -53,6 +53,7 @@ const server = http.createServer((req, res) => {
 		default:
 			contentType = 'text/html'
 			location += '/fuzzytrader-hb.html'
+			serveFile = true
 			break;
 	}
 
@@ -69,13 +70,9 @@ const server = http.createServer((req, res) => {
 					res.end(JSON.stringify(portfolio))
 				})
 				break;
-			case '/portfolio/price':
-				//fuzzy.setPriceAndAmount((portfolio) => {
-				//	console.log(portfolio)
-				//	res.end(JSON.stringify(portfolio))
-				//})
-				fuzzy.getPortfolioWithPrice('AAPL', (portfolio) => {
-					res.end(JSON.stringify(portfolio))
+			case '/portfolio/add':
+				fuzzy.addToPortfolio({symbol:'AAPL', quantity:100}, () => {
+					res.end('')
 				})
 				break;
 			case '/orders':
