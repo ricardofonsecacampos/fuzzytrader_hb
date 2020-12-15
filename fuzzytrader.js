@@ -9,11 +9,11 @@ function getOrdersForAmount(tradeAmount, callback) {
 	if (tradeAmount <= 0) return []
 	
 	getPortfolio((portfolio) => {
-		agressiveAmount = 0
+		let agressiveAmount = 0
 		portfolio.assets.forEach((asset) => {
 			if (asset.profile == 'agressive') agressiveAmount += asset.amount
 		})
-		portfolioAmount = portfolio.total_amount	
+		let portfolioAmount = portfolio.total_amount	
 	
 		let typeSelected = 'agressive'
 		if (((agressiveAmount + tradeAmount) / (portfolioAmount + tradeAmount)) > 0.2)
