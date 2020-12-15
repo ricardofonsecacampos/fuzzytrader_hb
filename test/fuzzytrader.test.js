@@ -50,6 +50,7 @@ describe('Portfolio', () => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:300}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
 				let aaplItem = fuzzy.getAssetInPortfolio(portfolio, 'AAPL')
+				expect(portfolio.assets.length).toBe(1)
 				expect(aaplItem.symbol).toBe('AAPL')
 				expect(aaplItem.quantity).toBe(300)
 				expect(aaplItem.price).toBe(120.41)
@@ -59,53 +60,44 @@ describe('Portfolio', () => {
 			})
 		})
 	})
-	test.skip('two assets', done => {
+	test('two assets', done => {
 		fuzzy.addToPortfolio({symbol:'XRP', quantity:90.9565857}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
+				expect(portfolio.assets.length).toBe(2)
+				
 				let xrpItem = fuzzy.getAssetInPortfolio(portfolio, 'XRP')
 				let aaplItem = fuzzy.getAssetInPortfolio(portfolio, 'AAPL')
 
-				fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
-					fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
+				expect(xrpItem.quantity).toBe(90.9565857)
+				expect(xrpItem.price).toBe(0.50621)
+				expect(Number(xrpItem.amount.toFixed(8))).toBe(46.04313325)
 
-						expect(xrpItem.quantity).toBe(90.9565857)
-						expect(xrpItem.price).toBe(0.50621)
-						expect(Number(xrpItem.amount.toFixed(8))).toBe(46.04313325)
+				expect(aaplItem.quantity).toBe(300)
+				expect(aaplItem.amount).toBe(36123)
+				expect(aaplItem.price).toBe(120.41)
 
-						expect(aaplItem.quantity).toBe(300)
-						expect(aaplItem.amount).toBe(36123)
-						expect(aaplItem.price).toBe(120.41)
-
-						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
-
-						done()
-					})
-				})
+				expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
+				done()
 			})
 		})
 	})
-	test.skip('alter one', done => {
+	test('alter one', done => {
 		fuzzy.addToPortfolio({symbol:'AAPL', quantity:80000}, (item) => {
 			fuzzy.getPortfolio((portfolio) => {
+				expect(portfolio.assets.length).toBe(2)
+				
 				let aaplItem = fuzzy.getAssetInPortfolio(portfolio, 'AAPL')
 				expect(aaplItem.quantity).toBe(80300)
+				expect(aaplItem.amount).toBe(9668923)
+				expect(aaplItem.price).toBe(120.41)
 				
 				let xrpItem = fuzzy.getAssetInPortfolio(portfolio, 'XRP')
-					
-				fuzzy.setPriceAndAmount(portfolio, aaplItem, (price, amount) => {
-					fuzzy.setPriceAndAmount(portfolio, xrpItem, (price, amount) => {
-						expect(aaplItem.amount).toBe(9668923)
-						expect(aaplItem.price).toBe(120.41)
+				expect(xrpItem.quantity).toBe(90.9565857)
+				expect(xrpItem.price).toBe(0.50621)
+				expect(Number(xrpItem.amount.toFixed(8))).toBe(46.04313325)
 
-						expect(xrpItem.quantity).toBe(90.9565857)
-						expect(xrpItem.price).toBe(0.50621)
-						expect(Number(xrpItem.amount.toFixed(8))).toBe(46.04313325)
-						
-						expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
-
-						done()
-					})
-				})
+				expect(portfolio.total_amount).toBe(aaplItem.amount + xrpItem.amount)
+				done()
 			})
 		})
 	})
