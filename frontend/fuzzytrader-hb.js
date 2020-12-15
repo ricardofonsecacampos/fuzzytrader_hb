@@ -10,8 +10,8 @@ function getOrdersForAmount(amount, callback) {
 	})
 		.then(function (response) {
 			response.json()
-			.then(function (assets) {
-				callback(assets)
+			.then(function () {
+				callback()
 			})
 			.catch(() => {
 				//TODO add error message.
