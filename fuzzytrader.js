@@ -61,7 +61,8 @@ function getPortfolio(callback) {
 					asset.price = 0
 				}
 			})
-			console.log('portfolio='+portfolio)
+			console.log('portfolio=')
+			console.log(portfolio)
 			fillPortfolioPricesAndAmounts(portfolio, callback)
 		})
 	})
