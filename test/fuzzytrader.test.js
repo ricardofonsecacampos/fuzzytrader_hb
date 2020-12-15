@@ -171,6 +171,21 @@ describe('Orders', () => {
 			expect(assets[0].profile).toBe('conservative')
 			expect(assets[1].profile).toBe('conservative')
 			expect(assets[2].profile).toBe('conservative')
+			
+			let aaplItem = fuzzy.getAssetInList(assets, 'AAPL')
+			expect(aaplItem.amount).toBe(1000)
+			expect(aaplItem.price).toBe(120.41)
+			expect(aaplItem.quantity).toBe(8)
+				
+			let bnbItem = fuzzy.getAssetInList(assets, 'BNB')
+			expect(bnbItem.amount).toBe(1000)
+			expect(bnbItem.price).toBe(30.02514623)
+			expect(Number(bnbItem.quantity.toFixed(8))).toBe(33.30541648)
+			
+			let valeItem = fuzzy.getAssetInList(assets, 'VALE')
+			expect(valeItem.amount).toBe(1000)
+			expect(valeItem.price).toBe(16.46)
+			expect(valeItem.quantity).toBe(60)
 			done()
 		})
 	})
