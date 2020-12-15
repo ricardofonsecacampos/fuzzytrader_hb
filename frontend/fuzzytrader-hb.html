@@ -91,12 +91,14 @@
 			}
 		}
 		
+		// Handles the buy button click.
 		function buy(num) {
-			addToPortfolio(suggestedOrders[num-1], () => updatePortfolio)
+			addToPortfolio(suggestedOrders[num-1], updatePortfolio)
 			document.getElementsByTagName('input')['amount'].value = ''
 			updateOrders()
 		}
 		
+		// Useless
 		function addMessage(msg) {
 			let msgDiv = document.getElementById('messages')
 			msgDiv.removeChild(msgDiv.children[2])
