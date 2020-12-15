@@ -23,8 +23,6 @@ function getPostJsonParams(request, callback) {
 }
 
 const server = http.createServer((req, res) => {
-	console.log(req.url)
-	
 	let location = 'frontend'
 	let serveFile = true
 	let contentType = 'application/json'
@@ -59,36 +57,29 @@ const server = http.createServer((req, res) => {
 	
 	// serve the requested file.
 	if (serveFile) {
-		console.log('file')
 		fs.createReadStream(location).pipe(res)
 	} else {
 		switch (req.url) {
 			case '/portfolio/get':
 				fuzzy.getPortfolio((portfolio) => {
-					console.log('get')
 					res.end(JSON.stringify(portfolio))
 				})
 				break;
 			case '/portfolio/add':
 				getPostJsonParams(req, (param) => {
-					console.log(param)
 					fuzzy.addToPortfolio(param, () => {
-						console.log('add')
 						res.end('')
 					})
 				})
 				break;
 			case '/orders':
 				getPostJsonParams(req, (param) => {
-					console.log(param)
 					fuzzy.getOrdersForAmount(param.trade_amount, (assets) => {
-						console.log('orders')
 						res.end(JSON.stringify(assets))
 					})
 				})
 				break;
 			default: 
-					console.log('end()')
 					res.end()
 		}
 	}
