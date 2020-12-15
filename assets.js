@@ -16,7 +16,13 @@ function getStockPrice(symbol, callback) {
 	}
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
-		if (callback) callback(body['Global Quote']['05. price'])
+		if (callback) {
+			try {
+				callback(body['Global Quote']['05. price'])
+			} catch {
+				callback(999.99)
+			}
+		}
 	})
 }
 
