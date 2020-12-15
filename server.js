@@ -70,9 +70,12 @@ const server = http.createServer((req, res) => {
 				})
 				break;
 			case '/portfolio/add':
-				fuzzy.addToPortfolio({symbol:'AAPL', quantity:100}, () => {
-					console.log('add')
-					res.end('')
+				getPostJsonParams(req, (param) => {
+					console.log(param)
+					fuzzy.addToPortfolio(param, () => {
+						console.log('add')
+						res.end('')
+					})
 				})
 				break;
 			case '/orders':
