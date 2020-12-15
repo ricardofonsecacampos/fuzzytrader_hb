@@ -12,7 +12,7 @@
 		// This code deals with HTML and calls business logic functions imported from another file.
 		
 		// The first thing to do is bring current portfolio data for the trader.
-		window.onload = { updatePortfolio, updateOrders }
+		window.onload = updatePortfolio
 		
 		// Callback function to update the data of portfolio assets and total shown to the trader.
 		// Clears the portfolio table then adds the portfolio asset's data again.
@@ -36,9 +36,9 @@
 					let quantityPrecision = (orders[i-1].type == 'stock' ? 0 : 5)
 
 					setDivText(item, asset.symbol)
-					setDivText(item, asset.quantity.toFixed(quantityPrecision))
-					setDivText(item, asset.price.toFixed(pricePrecision))
-					setDivText(item, asset.amount.toFixed(2))
+					setDivText(item, Number(asset.quantity).toFixed(quantityPrecision))
+					setDivText(item, Number(asset.price).toFixed(pricePrecision))
+					setDivText(item, Number(asset.amount).toFixed(2))
 				}
 			})
 			
@@ -79,8 +79,8 @@
 						 
 				divs[0].getElementsByTagName('button')[0].disabled = !orders[i-1].symbol
 				divs[1].innerText = orders[i-1].symbol
-				divs[2].innerText = orders[i-1].price.toFixed(pricePrecision)
-				divs[3].innerText = orders[i-1].quantity.toFixed(quantityPrecision)
+				divs[2].innerText = Number(orders[i-1].price).toFixed(pricePrecision)
+				divs[3].innerText = Number(orders[i-1].quantity).toFixed(quantityPrecision)
 			}
 		}
 		
@@ -133,19 +133,19 @@
 			<div title="Quantity to be bought with the amount entered">Quantity</div>
 		</div>
 		<div class="order" id="order-1">
-			<div><button>BUY</button></div>
+			<div><button disabled=true>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
 		</div>
 		<div class="order" id="order-2">
-			<div><button>BUY</button></div>
+			<div><button disabled=true>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
 		</div>
 		<div class="order" id="order-3">
-			<div><button>BUY</button></div>
+			<div><button disabled=true>BUY</button></div>
 			<div></div>
 			<div></div>
 			<div></div>
