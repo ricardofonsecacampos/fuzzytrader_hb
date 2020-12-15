@@ -21,7 +21,7 @@ function getOrdersForAmount(portfolioAmount, agressiveAmount, tradeAmount, callb
 // Recursive function to set all prices and quantities of an assets lists.
 // Used to set orders given an amount to trade.
 function fillAssetsPricesAndQuantities(assets, callback) {
-	let asset = nextAssetWithoutPrice(assets.assets)
+	let asset = nextAssetWithoutPrice(assets)
 	if (!asset) {
 		return callback(assets)
 	}
