@@ -4,11 +4,13 @@ This was originally a project for an employee selection process at bxblue / Braz
 
 The webapp runs on Heroku.
 
-It is made of a NodeJS server responding to static files (HTML, CSS and client JS) and NodeJS modules that implement the three mais services: listing available assets (stocks and cryptos) for trade, portfolio details, and adding more assets to portfolio.
+It is made of a NodeJS server responding to static files (HTML, CSS and client JS) and NodeJS modules that implement the three main services: listing available assets (stocks and cryptos) for trade, portfolio details, and adding more assets to portfolio.
 
 The tests are automated with Jest and covers all the back end. I hadn't time to automate the integration tests, unfortunately. Feel free if you want to.
 
 The front end is made in pure HTML, CSS and Javascript. It is not very attractive and can be a lot upgraded with React or some other tecnology.
+
+Cronology:
 
 # 1
 I first decided to code with Javascript and use a NodeJS web server. Maybe Rails would be nice but there had been many years since I ran the first tutorials.
