@@ -9,7 +9,7 @@ function getOrdersForAmount(amount, callback) {
 			'Content-Type': 'application/json'
 		},
 		method: "POST",
-		body: {portAmount: 0, portAgresAmount: 0, tradeAmount: amount}
+		body: JSON.stringify({portAmount: 0, portAgresAmount: 0, tradeAmount: amount})
 	})
 		.then(function (response) {
 			response.json()
