@@ -1,5 +1,6 @@
 const baseUrl = 'https://fuzzytrader-app.herokuapp.com/'
 
+// Requests the suggested orders based on the portfolio state and trade amount.
 function getOrdersForAmount(amount, callback) {
 	if (!Number(amount) || amount <= 0) return []
 	
@@ -21,6 +22,7 @@ function getOrdersForAmount(amount, callback) {
 		})
 }
 
+// Requests the updated portfolio with prices and amounts.
 function getPortfolio(callback) {
 	fetch(baseUrl + 'portfolio/get')
 		.then(function (response) {
@@ -37,6 +39,7 @@ function getPortfolio(callback) {
 		})
 }
 
+// Requests to add one asset in the portfolio or increment its quantity.
 function addToPortfolio(asset, callback) {
 	fetch((baseUrl + 'portfolio/add'), {
 		method: "POST",
