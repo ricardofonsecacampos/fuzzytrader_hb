@@ -83,7 +83,8 @@
 				let pricePrecision = (orders[i-1].type == 'stock' ? 2 : 5)
 				let quantityPrecision = (orders[i-1].type == 'stock' ? 0 : 5)
 						 
-				divs[0].getElementsByTagName('button')[0].disabled = !orders[i-1].symbol
+				divs[0].getElementsByTagName('button')[0].disabled =
+					!orders[i-1].symbol || orders[i-1].price == 999.99
 				divs[1].innerText = orders[i-1].symbol
 				divs[2].innerText = Number(orders[i-1].price).toFixed(pricePrecision)
 				divs[3].innerText = Number(orders[i-1].quantity).toFixed(quantityPrecision)
