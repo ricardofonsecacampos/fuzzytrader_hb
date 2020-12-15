@@ -163,7 +163,7 @@ describe('Orders', () => {
 		})
 	})
 	test('agressive portfolio', done => {
-		fuzzy.addToPortfolio({symbol:'BNB', quantity:10000}, (item) => {
+		fuzzy.addToPortfolio({symbol:'BTC', quantity:100}, (item) => {
 			let tradeAmount = 1000
 			fuzzy.getOrdersForAmount(tradeAmount, (assets) => {
 				expect(assets.length).toBe(3)
