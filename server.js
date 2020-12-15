@@ -23,7 +23,6 @@ const server = http.createServer((req, res) => {
 		})
 		req.on('end', () => {
 			console.log(parse(body))
-			console.log(JSON.parse(parse(body)))
 		})
 	}
 	
