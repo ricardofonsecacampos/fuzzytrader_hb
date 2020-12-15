@@ -38,7 +38,7 @@ function getPortfolio(callback) {
 }
 
 function addToPortfolio(asset, callback) {
-	fetch(baseUrl + 'portfolio/add'), {
+	fetch((baseUrl + 'portfolio/add'), {
 		method: "POST",
 		body: JSON.stringify({symbol: asset.symbol, quantity: asset.quantity})
 	})
