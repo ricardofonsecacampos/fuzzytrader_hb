@@ -4,8 +4,6 @@
 const http = require('http')
 // Serve static files.
 const fs = require('fs')
-// Help parsing POST parameters.
-const concat = require('concat-stream')
 
 // Fuzzy trader services
 const fuzzy = require('./fuzzytrader.js')
@@ -16,10 +14,15 @@ const PORT = process.env.PORT || 3000
 const server = http.createServer((req, res) => {
 	console.log(req.url)
 	
-	concat(req, buffer => {
-		let data = JSON.parse(buffer.toString())
-		console.log('Data: ', data)
-	})
+	if (req.method == 'POST') {
+		let body = ''
+		req.on('data', chunk => {
+			body += chunk.toString()
+		})
+		req.on('end', () => {
+			console.log(body)
+		})
+	}
 	
 	let location = 'frontend'
 	let serveFile = true
