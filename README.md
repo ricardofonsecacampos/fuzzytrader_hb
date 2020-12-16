@@ -1,8 +1,14 @@
-Repo for Fuzzy Trader Home Broker web application.
+Repo for Fuzzy Trader Home Broker, a demonstration web application.
 
 This was originally a project for an employee selection process at bxblue / Brazil.
 
 The webapp runs on Heroku.
+
+It is made of a NodeJS server responding to static files (HTML, CSS and client JS) and NodeJS modules that implement the three mais services: listing available assets (stocks and cryptos) for trade, portfolio details, and adding more assets to portfolio.
+
+The tests are automated with Jest and covers all the back end. I hadn't time to automate the integration tests, unfortunately. Feel free if you want to.
+
+The front end is made in pure HTML, CSS and Javascript. It is not very attractive and can be a lot upgraded with React or some other tecnology.
 
 # 1
 I first decided to code with Javascript and use a NodeJS web server. Maybe Rails would be nice but there had been many years since I ran the first tutorials.
@@ -34,4 +40,9 @@ It was really hard to automate the test of high level operations (exposed to the
 
 # 5
 Next step is to connect the application (HTML page) to my functions and provide some front end automated tests to guarantee it is working fine (maybe Selenium).
+
+# 6
+Done! App page connecting to tested services through the NodeJS server. Lost to much time changing the list operations to be recursive and bring all prices at once.
+Finally, I couln't dinamically set messages on the page and didn't have time to finish the automated integration test with Selenium.
+One real problem with this app is that the quotation API (alphavantage.co) often blocks my requests and I don't get prices! In these cases, I am setting prices to 999.99 and avoiding trades. After some 20 ou 30 seconds, the service allows more requests.
 

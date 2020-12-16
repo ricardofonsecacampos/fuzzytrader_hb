@@ -1,6 +1,7 @@
 // Module for retrieving stock and cryptocurrency quotes on the internet.
 // Using the Alpha Vantage API.
 // The two functions must be mocked for automated tests.
+// If the API blocks the request, we set 999.99 prices.
 
 const apiKey = process.env.ASSETS_PRICE_API_KEY
 const apiUrl = process.env.ASSETS_PRICE_API_URL
@@ -9,6 +10,7 @@ const apiUrl = process.env.ASSETS_PRICE_API_URL
 const request = require("request");
 
 // Retrieves stock quotation given its symbol.
+// See 'www.alphavantage.co' for more information.
 function getStockPrice(symbol, callback) {
 	jsonRequest = {
 		json: true,
@@ -16,7 +18,14 @@ function getStockPrice(symbol, callback) {
 	}
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
-		if (callback) callback(body['Global Quote']['05. price'])
+		if (callback) {
+			try {
+				callback(body['Global Quote']['05. price'])
+			} catch {
+				// the API sometimes doesn't respond due to frequency limitation.
+				callback(999.99)
+			}
+		}
 	})
 }
 
@@ -29,7 +38,14 @@ function getCryptoPrice(symbol, callback) {
 	}
 	request(jsonRequest, function (error, response, body) {
 		if (error) throw new Error(error)
-		if (callback) callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+		if (callback) {
+			try {
+				callback(body['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+			} catch {
+				// the API sometimes doesn't respond due to frequency limitation.
+				callback(999.99)
+			}
+		}
 	})
 }
 
